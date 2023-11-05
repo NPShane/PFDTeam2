@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PFDTeam2.Models.CalendarViewModel>
+
+@{
+    ViewData["Title"] = "Calendar";
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>GenerateCalendar</title>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css' rel='stylesheet' />
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.js'></script>
+    </head>
+    <body>
+    <h1>@ViewData["Title"]</h1>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+    @*<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: [
+        @foreach (var calendarEvent in Model)
+        {
+            <text>
+                        {
+                            title: '@calendarEvent.Title',
+                            start: '@calendarEvent.Start.ToString("yyyy-MM-ddTHH:mm:ss")',
+                            end: '@calendarEvent.End.ToString("yyyy-MM-ddTHH:mm:ss")'
+                        },
+            </text>
+        }
+        @Html.Raw("\n")
+                    ],
+                // Other FullCalendar options and callbacks
+            });
+            calendar.render();
+        });
+    </script>*@
+    </body>
+</html>
