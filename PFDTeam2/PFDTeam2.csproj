@@ -6,4 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth" Version="1.63.0" />
+    <PackageReference Include="Google.Apis.Auth.AspNetCore3" Version="1.63.0" />
+    <PackageReference Include="Google.Apis.Auth.Mvc" Version="1.62.0" />
+    <PackageReference Include="Google.Apis.Calendar.v3" Version="1.63.0.3171" />
+  </ItemGroup>
+
 </Project>
