@@ -18,7 +18,7 @@ namespace PFDTeam2.Controllers
 
         private static readonly string[] Scopes = { CalendarService.Scope.Calendar };
         private static readonly string ApplicationName = "WEB client 2";
-        private static readonly string ClientSecretPath = "C:\\Users\\User\\OneDrive\\Documents\\client_secret_381048076743-gu8s7o9uie7d0ate6fkaoh8l1c814fqa.apps.googleusercontent.com (1).json";
+        private static readonly string ClientSecretPath = "client_secret_381048076743-gu8s7o9uie7d0ate6fkaoh8l1c814fqa.apps.googleusercontent.com (1).json";
         private static readonly string CredentialsFolderPath = "App_Data/Calendar.API.Store";
 
         private readonly IConfiguration _configuration;
