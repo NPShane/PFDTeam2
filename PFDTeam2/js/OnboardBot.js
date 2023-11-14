@@ -10,6 +10,23 @@ app.event('app_home_opened', ({ event, say }) => {
     say({
         text: `Hello! I'm your custom Slack bot. I'm here to help you with information about our company. Type \`help\` if you have questions.`,
         channel: event.user,
+        blocks: [
+            {
+                type: 'section',
+                text: {
+                    type: 'mrkdwn',
+                    text: 'Click the button below:',
+                },
+                accessory: {
+                    type: 'button',
+                    text: {
+                        type: 'plain_text',
+                        text: 'Click Me',
+                    },
+                    action_id: 'button_click', // Action ID for the button click
+                },
+            },
+        ]
     });
 });
 
