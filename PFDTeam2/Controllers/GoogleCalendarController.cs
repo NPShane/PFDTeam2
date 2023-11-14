@@ -9,6 +9,7 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PFDTeam2.Models;
 using static System.Net.WebRequestMethods;
 
 namespace PFDTeam2.Controllers
@@ -52,6 +53,7 @@ namespace PFDTeam2.Controllers
 
             return View("~/Views/Google/Index.cshtml");
         }
+
 
         [HttpGet]
         public IActionResult GetEvents()
@@ -98,42 +100,60 @@ namespace PFDTeam2.Controllers
 
             return Json(formattedEvents);
         }
-        public IActionResult AddEvent()
+        [HttpPost]
+        public IActionResult CreateEvent()
         {
-            UserCredential credential;
-
-            using (var stream = new FileStream(ClientSecretPath, FileMode.Open, FileAccess.Read))
+            return View("~/Views/Google/Create.cshtml");
+        }
+        [HttpPost]
+        public IActionResult CreateEvent(EventModel model)
+        {
+            try
             {
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(CredentialsFolderPath)).Result;
+                UserCredential credential;
+                string[] Scopes = { "https://www.googleapis.com/auth/calendar" };
+                using (var stream = new FileStream(ClientSecretPath, FileMode.Open, FileAccess.Read))
+                {
+                    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                        GoogleClientSecrets.FromStream(stream).Secrets,
+                        Scopes,
+                        "user",
+                        CancellationToken.None,
+                        new FileDataStore(CredentialsFolderPath)).Result;
+                }
+
+                var service = new CalendarService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = ApplicationName,
+                });
+
+                // Create a new event
+                var newEvent = new Event
+                {
+                    Summary = model.Summary,
+                    Description = model.Description,
+                    Start = new EventDateTime { DateTime = model.StartDateTime },
+                    End = new EventDateTime { DateTime = model.EndDateTime },
+                };
+
+                // Add the event to the primary calendar
+                var request = service.Events.Insert(newEvent, "primary");
+                var createdEvent = request.Execute();
+
+                // Log the created event ID
+                Console.WriteLine("Event created: " + createdEvent.Id);
+
+                // Redirect back to the Index action after creating the event
+                return RedirectToAction("Index");
+
             }
-
-            var service = new CalendarService(new BaseClientService.Initializer()
+            catch (Exception ex)
             {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-
-            var newEvent = new Event
-            {
-                Summary = "Event Name",
-                Description = "Event Description",
-                Start = new EventDateTime { DateTime = DateTime.Now.AddDays(1) },
-                End = new EventDateTime { DateTime = DateTime.Now.AddDays(2) },
-            };
-
-            var request = service.Events.Insert(newEvent, "primary");
-            var createdEvent = request.Execute();
-
-            // Handle the response or redirect to another page.
-            // You might want to store the createdEvent.Id for future updates/deletion.
-
-            return RedirectToAction("Index");
-
+                // Log any exceptions
+                Console.WriteLine("Error creating event: " + ex.Message);
+                throw;
+            }
         }
     }
 }
