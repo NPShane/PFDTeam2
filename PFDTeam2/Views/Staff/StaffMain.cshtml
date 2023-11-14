@@ -116,7 +116,7 @@
         #menu-icon {
             font-size: 24px;
             cursor: pointer;
-            color: white;
+            color: darkblue;
             display: none;
         }
 
@@ -124,7 +124,7 @@
         .logo {
             font-size: 3.2rem;
             font-weight: 700;
-            color: white;
+            color: darkblue;
         }
 
             .logo span {
@@ -137,7 +137,7 @@
         }
 
             .navbar a {
-                color: white;
+                color: darkblue;
                 font-size: 1.2rem;
                 text-transform: uppercase;
                 font-weight: 500;
@@ -149,9 +149,25 @@
                     border-bottom: 3px solid var(--main-color);
                 }
         /* -------------------- END -------------------- */
+
+
+        .black-container {
+            position: absolute;
+            background-color: darkblue; 
+            opacity: 0.8; /* Adjust the opacity as needed */
+            width: 40%; /* Adjust the width as needed */
+            height: 200px; /* Adjust the height as needed */
+            top: 32%; /* Adjust the top position as needed */
+            left: 15%; /* Adjust the left position as needed */
+            transform: translateX(-50%); /* Center the container horizontally */
+            z-index: 0;
+            border-radius: 15px;
+        }
+
         .login-register {
             text-align: center;
             margin-top: 20px;
+            z-index: 999;
         }
 
         .login-popup {
@@ -184,19 +200,22 @@
             min-height: 640px;
             display: flex;
             align-items: center;
-            background: url('images/oie_LAWzCyFIG63S.jpg');
+            background: url(https://www.workato.com/product-hub/wp-content/uploads/2021/11/Octoberproductheader_compress.gif);
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center left;
         }
+        
 
         .home-text {
             padding-left: 30px;
             color: var(--bg-color);
+            z-index: 1;
         }
 
         .hometext h1 {
             font-size: 3.4rem;
+            z-index: 1;
         }
 
         .home-text p {
@@ -204,6 +223,7 @@
             font-weight: 800;
             margin: 0.5rem 0 1.2rem;
             color: white;
+            z-index: 1;
         }
         /* -------------------- END -------------------- */
 
@@ -304,7 +324,7 @@
             }
 
         .btn:hover {
-            background: yellow;
+            background: lightskyblue;
         }
 
         .btns {
@@ -459,6 +479,10 @@
             font-size: 4.5rem;
             color: var(--black);
         }
+
+        .bluebold {
+            color: lightskyblue;
+        }
         /* -------------------- END -------------------- */
         /* -------------------- Footer -------------------- */
         .footer .box-container {
@@ -536,135 +560,146 @@
 
         /* -------------------- END -------------------- */
 
-        @@media (max-width:1280px){
-    html{
-        font-size: 55%;
-    }
-    header{
-        padding:2rem;
-    }
-    section{
-        padding:2rem;
-    }
-    .home{
-        background-position: left;
-    }
-}
-@@media (max-width: 1080px ) {
-    .container {
-        margin-left: 1rem;
-        margin-right: 1rem;
-    }
-}
+        @@media (max-width:1280px) {
+            html {
+                font-size: 55%;
+            }
+
+            header {
+                padding: 2rem;
+            }
+
+            section {
+                padding: 2rem;
+            }
+
+            .home {
+                background-position: left;
+            }
+        }
+
+        @@media (max-width: 1080px ) {
+            .container {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+        }
 
 
 
-@@media (max-width: 991px) {
-    .nav {
-        padding: 15px 20px;
-    }
-    section{
-        padding: 3rem 0 1rem;
-    }
-    .home.text {
-        padding-left: 2rem;
-    }
-    .home.text h1{
-        font-size: 2.1rem;
-    }
+        @@media (max-width: 991px) {
+            .nav {
+                padding: 15px 20px;
+            }
 
-}
+            section {
+                padding: 3rem 0 1rem;
+            }
 
-@@media (max-width: 968px){
-    .nav {
-        padding: 10px 0;
-    }
-    #menu-icon {
-        display: initial;
-    }
-    .navbar {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        background: black;
-        row-gap: 0.5rem;
-        text-align: center;
-        box-shadow: 4px 4px 20px rgb(15 54 55 /20%);
-        clip-path: circle(0% at 0% 0%);
-        transition: 0.6s;
-    }
-    .navbar a {
-        display: block;
-        padding: 15px;
-    }
-    .navbar a:hover,
-    .navbar.active{
-        border-bottom: none;
-        background: black;
-        color: var(--bg-color);
-    }
-    .navbar.active{
-        clip-path: circle(144% at 0% 0%);
-    }
-    .blog-container .box {
-        padding: 4px;
-    }
+            .home.text {
+                padding-left: 2rem;
+            }
 
-}
+                .home.text h1 {
+                    font-size: 2.1rem;
+                }
+        }
 
-@@media (max-width: 360px) {
-    .home {
-        min-height: 500px;
-    }
-    .home-text h1{
-        font-size: 2rem;
-    }
-    .home-text p br{
-        display: contents;
-    }
-}
+        @@media (max-width: 968px) {
+            .nav {
+                padding: 10px 0;
+            }
 
-@@media (max-width: 968px) {
+            #menu-icon {
+                display: initial;
+            }
 
+            .navbar {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                display: flex;
+                flex-direction: column;
+                background: black;
+                row-gap: 0.5rem;
+                text-align: center;
+                box-shadow: 4px 4px 20px rgb(15 54 55 /20%);
+                clip-path: circle(0% at 0% 0%);
+                transition: 0.6s;
+            }
 
-    .section-3-wrapper{
-        flex-direction: column;
+                .navbar a {
+                    display: block;
+                    padding: 15px;
+                }
 
-    }
+                    .navbar a:hover,
+                    .navbar.active {
+                        border-bottom: none;
+                        background: black;
+                        color: var(--bg-color);
+                    }
 
-    .feedback{
-        width: 350px;
-        height: 150px;
-        margin-top: 10px;
-    }
-    .feedback-desc{
-        width: 350px;
-        height: 140px;
-        font-size: 9.5px;
-        margin-right: 0px;
-        
+                .navbar.active {
+                    clip-path: circle(144% at 0% 0%);
+                }
 
-    }
-    .feedback-desc .far{
+            .blog-container .box {
+                padding: 4px;
+            }
+        }
 
-        font-size: 25px;
-    }
-}
+        @@media (max-width: 360px) {
+            .home {
+                min-height: 500px;
+            }
+
+            .home-text h1 {
+                font-size: 2rem;
+            }
+
+            .home-text p br {
+                display: contents;
+            }
+        }
+
+        @@media (max-width: 968px) {
 
 
+            .section-3-wrapper {
+                flex-direction: column;
+            }
 
-@@media (max-width:450px){
-    html{
-        font-size: 50%;
-    }
-    .heading{
-        font-size: 3rem;
-    }
+            .feedback {
+                width: 350px;
+                height: 150px;
+                margin-top: 10px;
+            }
 
-}
+            .feedback-desc {
+                width: 350px;
+                height: 140px;
+                font-size: 9.5px;
+                margin-right: 0px;
+            }
+
+                .feedback-desc .far {
+                    font-size: 25px;
+                }
+        }
+
+
+
+        @@media (max-width:450px) {
+            html {
+                font-size: 50%;
+            }
+
+            .heading {
+                font-size: 3rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -674,9 +709,9 @@
             <i class='bx bx-menu' id="menu-icon"></i>
             <a href="#" class="logo"> Workato <span class="symbol">&reg;</span></a>
             <ul class="navbar">
-                <li><a href="#home"> Home </a></li>
-                <li><a href="#about"> About Us </a></li>
-                <li><a href="/Member/Register"> Register </a></li>
+                <li><a href="~/Staff/Calendar"> Calendar </a></li>
+                <li><a href="#about"> Slack </a></li>
+                <li><a href="/Member/Register"> Feedback </a></li>
                 <li><a href="#contact"> Contact Us  </a></li>
             </ul>
 
@@ -684,18 +719,19 @@
     </header>
     <!-- Background image -->
     <section class="home" id="home">
+        <div class="black-container"></div>
         <div class="home-text">
-            <h1>Leading Automation Comapny</h1>
-            <p> Onboarding App</p>
+            <h1>Welcome to <b class="bluebold">WORKATO</b></h1>
+            <p> Delivering to you: Exceptional Onbaording Experience</p>
             <div class="login-register">
-                <a href="#" class="btn btn-primary" id="showLoginPopupButton">Login</a>
-                <a href="/Member/Register" class="btn btn-primary">Register Member</a>
+                <a href="#" class="btn btn-primary" id="showLoginPopupButton">Get started on your tasks</a>
+                @*<a href="/Member/Register" class="btn btn-primary">Register Member</a>*@
             </div>
         </div>
 
     </section>
 
-    <section class="about" id="about">
+   @* <section class="about" id="about">
         <h1 class="heading"> <span> About </span> Us </h1>
 
         <div class="row">
@@ -720,7 +756,6 @@
         </div>
     </section>
     <!-- about section ends -->
-   
     <!-- Login Popup -->
     <div class="login-popup" id="loginPopup">
         <span class="close-btn" id="loginPopupCloseButton">&times;</span>
@@ -764,7 +799,7 @@
                 <input type="submit" value="Send Message" class="btn">
             </form>
         </div>
-    </section>
+    </section>*@
 
     <!-- Footer section starts  -->
     <section class="footer">

@@ -1,20 +1,21 @@
-﻿using System;
-using System.IO;
-using System.Text.Encodings.Web;
-using System.Threading;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Calendar.v3;
+﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3.Data;
+using Google.Apis.Calendar.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using static System.Net.WebRequestMethods;
 
 namespace PFDTeam2.Controllers
 {
-    public class GoogleCalendarController : Controller
-    {        
+    public class StaffController : Controller
+    {   
+
+        /*-------------------------------------------- C A L E N D A R -----------------------------------------*/
+        public IActionResult StaffMain()
+        {
+            return View("~/Views/Staff/StaffMain.cshtml");
+        }
         private static readonly string[] Scopes = { CalendarService.Scope.Calendar };
         private static readonly string ApplicationName = "WEB client 2";
         private static readonly string ClientSecretPath = "client_secret_381048076743-gu8s7o9uie7d0ate6fkaoh8l1c814fqa.apps.googleusercontent.com (1).json";
@@ -22,11 +23,11 @@ namespace PFDTeam2.Controllers
 
         private readonly IConfiguration _configuration;
 
-        public GoogleCalendarController(IConfiguration configuration)
+        public StaffController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        public IActionResult Index(string someParameter)
+        public IActionResult Calendar(string someParameter)
         {
             string[] Scopes = { "https://www.googleapis.com/auth/calendar" };
             UserCredential credential;
@@ -50,7 +51,7 @@ namespace PFDTeam2.Controllers
             // Now you have an authenticated service instance (service) to interact with Google Calendar API.
             // Proceed to display the calendar and add events.
 
-            return View("~/Views/Google/Index.cshtml");
+            return View("~/Views/Staff/StaffCalendar.cshtml");
         }
 
         [HttpGet]
@@ -134,6 +135,84 @@ namespace PFDTeam2.Controllers
 
             return RedirectToAction("Index");
 
+        }
+
+        /*------------------------------------------------------------------------------------------------------------*/
+
+
+        // GET: StaffController
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        // GET: StaffController/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        // GET: StaffController/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: StaffController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: StaffController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: StaffController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: StaffController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        // POST: StaffController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }
