@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -177,6 +178,7 @@
             right: 10px;
             cursor: pointer;
         }
+
         /* -------------------- Homepage Banner -------------------- */
         .home {
             margin: auto;
@@ -184,7 +186,7 @@
             min-height: 640px;
             display: flex;
             align-items: center;
-            background: url('images/oie_LAWzCyFIG63S.jpg');
+            background: url(https://www.workato.com/product-hub/wp-content/uploads/2022/01/Dec-product-header-new-2.gif);
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center left;
@@ -192,11 +194,17 @@
 
         .home-text {
             padding-left: 30px;
-            color: var(--bg-color);
+            color: whitesmoke;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1.0); /* White shadow with alpha value 0.8 */
+            font-weight: bold;
+            /*transform: scale(1.1);*/
         }
 
         .hometext h1 {
             font-size: 3.4rem;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1.0); /* Added text-shadow */
         }
 
         .home-text p {
@@ -204,6 +212,8 @@
             font-weight: 800;
             margin: 0.5rem 0 1.2rem;
             color: white;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 1.0); /* Added text-shadow */
         }
         /* -------------------- END -------------------- */
 
@@ -216,12 +226,14 @@
         /* Login form container */
         #login-btn .btn {
             margin-top: 0;
+            text-shadow: none;
         }
 
         #login-btn i {
             display: none;
             font-size: 2.5rem;
             color: lightyellow;
+            text-shadow: none;
         }
 
         .btn {
@@ -235,6 +247,7 @@
             border-radius: .5rem;
             font-weight: 500;
             text-align: center;
+            text-shadow: none;
         }
 
         .header.active {
@@ -304,7 +317,7 @@
             }
 
         .btn:hover {
-            background: yellow;
+            background: turquoise;
         }
 
         .btns {
@@ -534,6 +547,7 @@
             background-color: #191919;
         }
 
+
         /* -------------------- END -------------------- */
 
         @@media (max-width:1280px){
@@ -685,11 +699,11 @@
     <!-- Background image -->
     <section class="home" id="home">
         <div class="home-text">
-            <h1>Leading Automation Comapny</h1>
-            <p> Onboarding App</p>
+            <h1> <b> Leading Automation Company: Workato </b></h1>
+            <p><i> Onboarding App</i></p>
             <div class="login-register">
-                <a href="#" class="btn btn-primary" id="showLoginPopupButton">Login</a>
-                <a href="/Member/Register" class="btn btn-primary">Register Member</a>
+                <a class="btn btn-primary" asp-controller="Home" asp-action="Login">Employee Login</a>
+                <a class="btn btn-primary" asp-controller="Home" asp-action="SupervisorLogin">Supervisor Login</a>
             </div>
         </div>
 
@@ -721,22 +735,6 @@
     </section>
     <!-- about section ends -->
    
-    <!-- Login Popup -->
-    <div class="login-popup" id="loginPopup">
-        <span class="close-btn" id="loginPopupCloseButton">&times;</span>
-        <h2>Login</h2>
-        <form id="loginForm" method="post" action="/Member/Dashboard" asp-antiforgery="true">
-            <div class="mb-3">
-                <label for="loginID" class="form-label">Login ID:</label>
-                <input type="text" class="form-control" id="loginID" name="loginID" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-    </div>
 
     <section class="newsletter">
 

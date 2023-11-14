@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PFDTeam2.DAL;
 
 namespace PFDTeam2.Controllers
 {
     public class SupervisorController : Controller
     {
+
+        private SupervisorDAL supervisorContext = new SupervisorDAL();
+
         // GET: SupervisorController
         public ActionResult Index()
         {
@@ -79,5 +83,39 @@ namespace PFDTeam2.Controllers
                 return View();
             }
         }
+        public ActionResult SupervisorMain()
+        {
+            return View("~/Views/Supervisor/SupervisorMain.cshtml");
+        }
+
+        /*-------------------------------------- L O G I N --------------------------------------------*/
+
+        [HttpPost]
+        public IActionResult SupervisorLogin(string email, string password)
+        {
+            if (supervisorContext.Login(email, password))
+            {
+                // Store Login ID in session with the key "Email"
+                HttpContext.Session.SetString("Email", email);
+                // Store user role "Member" as a string in session with the key "Role"
+                HttpContext.Session.SetString("Role", "Supervisor");
+
+                int supervisorId = supervisorContext.GetSupervisorIdByEmail(email);
+
+                // Store the MemberId in session
+                HttpContext.Session.SetInt32("SupervisorId", supervisorId);
+                // Redirect user to the "MemberMain" view through an action
+                return RedirectToAction("SupervisorMain");
+            }
+            else
+            {
+                // Store an error message in TempData for display at the index view
+                TempData["Message"] = "Invalid Login Credentials!";
+                return RedirectToAction("SupervisorLogin", "Home");
+            }
+        }
+
+
+
     }
 }

@@ -5,11 +5,39 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PFDTeam2.DAL;
 
 namespace PFDTeam2.Controllers
 {
     public class StaffController : Controller
-    {   
+    {
+        private StaffDAL staffContext = new StaffDAL();
+        /*-------------------------------------------- L O G I N -----------------------------------------------*/
+
+        [HttpPost]
+        public IActionResult StaffLogin(string email, string password)
+        {
+            if (staffContext.Login(email, password))
+            {
+                // Store Login ID in session with the key "Email"
+                HttpContext.Session.SetString("Email", email);
+                // Store user role "Member" as a string in session with the key "Role"
+                HttpContext.Session.SetString("Role", "Staff");
+
+                int staffId = staffContext.GetStaffIdByEmail(email);
+
+                // Store the MemberId in session
+                HttpContext.Session.SetInt32("StaffId", staffId);
+                // Redirect user to the "MemberMain" view through an action
+                return RedirectToAction("StaffMain");
+            }
+            else
+            {
+                // Store an error message in TempData for display at the index view
+                TempData["Message"] = "Invalid Login Credentials!";
+                return RedirectToAction("Login", "Home");
+            }
+        }
 
         /*-------------------------------------------- C A L E N D A R -----------------------------------------*/
         public IActionResult StaffMain()

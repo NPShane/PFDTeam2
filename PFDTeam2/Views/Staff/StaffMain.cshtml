@@ -116,7 +116,7 @@
         #menu-icon {
             font-size: 24px;
             cursor: pointer;
-            color: darkblue;
+            color:white;
             display: none;
         }
 
@@ -124,7 +124,7 @@
         .logo {
             font-size: 3.2rem;
             font-weight: 700;
-            color: darkblue;
+            color:white;
         }
 
             .logo span {
@@ -137,7 +137,7 @@
         }
 
             .navbar a {
-                color: darkblue;
+                color: white;
                 font-size: 1.2rem;
                 text-transform: uppercase;
                 font-weight: 500;
@@ -151,7 +151,7 @@
         /* -------------------- END -------------------- */
 
 
-        .black-container {
+      /*  .black-container {
             position: absolute;
             background-color: darkblue; 
             opacity: 0.8; /* Adjust the opacity as needed */
@@ -162,13 +162,8 @@
             transform: translateX(-50%); /* Center the container horizontally */
             z-index: 0;
             border-radius: 15px;
-        }
+        }*/
 
-        .login-register {
-            text-align: center;
-            margin-top: 20px;
-            z-index: 999;
-        }
 
         .login-popup {
             position: fixed;
@@ -200,22 +195,23 @@
             min-height: 640px;
             display: flex;
             align-items: center;
-            background: url(https://www.workato.com/product-hub/wp-content/uploads/2021/11/Octoberproductheader_compress.gif);
-            background-repeat: no-repeat;
+            background: url(https://www.workato.com/product-hub/wp-content/uploads/2022/01/Dec-product-header-new-2.gif);
             background-size: cover;
             background-position: center left;
         }
-        
+
 
         .home-text {
             padding-left: 30px;
-            color: var(--bg-color);
+            color: whitesmoke;
             z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1.0); /* Added text-shadow */
         }
 
         .hometext h1 {
             font-size: 3.4rem;
             z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1.0); /* Added text-shadow */
         }
 
         .home-text p {
@@ -224,6 +220,7 @@
             margin: 0.5rem 0 1.2rem;
             color: white;
             z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 1.0); /* Added text-shadow */
         }
         /* -------------------- END -------------------- */
 
@@ -236,12 +233,14 @@
         /* Login form container */
         #login-btn .btn {
             margin-top: 0;
+            text-shadow: none;
         }
 
         #login-btn i {
             display: none;
             font-size: 2.5rem;
             color: lightyellow;
+            text-shadow: none;
         }
 
         .btn {
@@ -255,6 +254,7 @@
             border-radius: .5rem;
             font-weight: 500;
             text-align: center;
+            text-shadow: none;
         }
 
         .header.active {
@@ -481,7 +481,7 @@
         }
 
         .bluebold {
-            color: lightskyblue;
+            color: turquoise;
         }
         /* -------------------- END -------------------- */
         /* -------------------- Footer -------------------- */
@@ -714,7 +714,6 @@
                 <li><a href="/Member/Register"> Feedback </a></li>
                 <li><a href="#contact"> Contact Us  </a></li>
             </ul>
-
         </div>
     </header>
     <!-- Background image -->
@@ -722,84 +721,13 @@
         <div class="black-container"></div>
         <div class="home-text">
             <h1>Welcome to <b class="bluebold">WORKATO</b></h1>
-            <p> Delivering to you: Exceptional Onbaording Experience</p>
+            <p> Delivering to you: Exceptional Onboarding Experience</p>
             <div class="login-register">
                 <a href="#" class="btn btn-primary" id="showLoginPopupButton">Get started on your tasks</a>
-                @*<a href="/Member/Register" class="btn btn-primary">Register Member</a>*@
             </div>
         </div>
 
     </section>
-
-   @* <section class="about" id="about">
-        <h1 class="heading"> <span> About </span> Us </h1>
-
-        <div class="row">
-            <div class="video-container">
-                <video src="images/pexels-yaroslav-shuraev-8464662 (2160p).mp4" loop autoplay muted></video>
-                <h3>Best Automation Company</h3>
-            </div>
-
-            <div class="content">
-                <div id="headerWithLottie">
-                    <div id="lottieAnimation"></div>
-                    <h2>Why Choose Us?</h2>
-                    <lottie-player src="https://assets3.lottiefiles.com/temp/lf20_9gY9Yf.json"
-                                   background="transparent" speed="0.75" style="width: 50px; height: 50px;" loop autoplay>
-                    </lottie-player>
-                </div>
-                <h2>Use our services to automate things</h2>
-                <p>automation is everything in this world it is time for you to keep up with the times and this is really important because it saves people like you alot of time so why not try out our services?</p>
-                <a href="#" class="btns">Learn More</a>
-            </div>
-        </div>
-        </div>
-    </section>
-    <!-- about section ends -->
-    <!-- Login Popup -->
-    <div class="login-popup" id="loginPopup">
-        <span class="close-btn" id="loginPopupCloseButton">&times;</span>
-        <h2>Login</h2>
-        <form id="loginForm" method="post" action="/Member/Dashboard" asp-antiforgery="true">
-            <div class="mb-3">
-                <label for="loginID" class="form-label">Login ID:</label>
-                <input type="text" class="form-control" id="loginID" name="loginID" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-    </div>
-
-    <section class="newsletter">
-
-        <form onsubmit="sendNews(); reset(); return false;">
-            <h3>Subscribe For Latest News</h3>
-            <input type="email" id="newsEmail" placeholder="Enter Your Email" class="box">
-            <input type="submit" value="Subscribe" class="btns">
-        </form>
-
-    </section>
-
-    <!--- Contact us --->
-    <section class="contact" id="contact">
-
-        <h1 class="contactheadings"> Contact Us </h1>
-
-        <div class="row">
-            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.7400248395365!2d103.76947568419236!3d1.3321089581828935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da107d8eb4e359%3A0x75d2e7ffdeeb0c43!2sNgee%20Ann%20Polytechnic!5e0!3m2!1sen!2ssg!4v1690967720206!5m2!1sen!2ssg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            <form onsubmit="sendEmail(); reset(); return false;">
-                <h3>Message Us</h3>
-                <input type="text" id="name" placeholder="Enter Name" class="box" required>
-                <input type="email" id="email" placeholder="Enter Email" class="box" required>
-                <input type="text" id="subject" placeholder="Enter Subject" class="box" required>
-                <textarea id="message" placeholder="Enter Message" class="box" cols="30" rows="10" required></textarea>
-                <input type="submit" value="Send Message" class="btn">
-            </form>
-        </div>
-    </section>*@
 
     <!-- Footer section starts  -->
     <section class="footer">

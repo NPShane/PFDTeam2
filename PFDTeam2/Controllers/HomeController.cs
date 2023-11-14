@@ -17,6 +17,20 @@ namespace PFDTeam2.Controllers
         {
             return View();
         }
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult SupervisorLogin()
+        {
+            return View();
+        }
+
+        public IActionResult StaffLogin()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
