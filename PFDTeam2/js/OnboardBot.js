@@ -30,6 +30,12 @@ app.event('app_home_opened', ({ event, say }) => {
     });
 });
 
+// Handle button clicks
+app.action('button_click', async ({ ack, say }) => {
+    await ack();
+    say('Button clicked!');
+});
+
 // Respond to user messages
 app.message('hello', ({ message, say }) => {
     say(`Hello <@${message.user}>! How can I assist you today?`);
