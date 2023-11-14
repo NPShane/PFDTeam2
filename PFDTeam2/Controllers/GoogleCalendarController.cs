@@ -20,12 +20,13 @@ namespace PFDTeam2.Controllers
         private static readonly string ApplicationName = "WEB client 2";
         private static readonly string ClientSecretPath = "client_secret_381048076743-gu8s7o9uie7d0ate6fkaoh8l1c814fqa.apps.googleusercontent.com (1).json";
         private static readonly string CredentialsFolderPath = "App_Data/Calendar.API.Store";
-
+        private readonly ILogger<GoogleCalendarController> _logger;
         private readonly IConfiguration _configuration;
 
-        public GoogleCalendarController(IConfiguration configuration)
+        public GoogleCalendarController(IConfiguration configuration, ILogger<GoogleCalendarController> logger)
         {
             _configuration = configuration;
+            _logger = logger;
         }
         public IActionResult Index(string someParameter)
         {
@@ -101,11 +102,6 @@ namespace PFDTeam2.Controllers
             return Json(formattedEvents);
         }
         [HttpPost]
-        public IActionResult CreateEvent()
-        {
-            return View("~/Views/Google/Create.cshtml");
-        }
-        [HttpPost]
         public IActionResult CreateEvent(EventModel model)
         {
             try
@@ -141,19 +137,25 @@ namespace PFDTeam2.Controllers
                 var request = service.Events.Insert(newEvent, "primary");
                 var createdEvent = request.Execute();
 
-                // Log the created event ID
-                Console.WriteLine("Event created: " + createdEvent.Id);
+                // Log the created event ID using ILogger
+                _logger.LogInformation("Event created: {EventId}", createdEvent.Id);
 
                 // Redirect back to the Index action after creating the event
                 return RedirectToAction("Index");
-
             }
             catch (Exception ex)
             {
-                // Log any exceptions
-                Console.WriteLine("Error creating event: " + ex.Message);
+                // Log any exceptions using ILogger
+                _logger.LogError(ex, "Error creating event");
+
+                // Handle the exception or rethrow it
                 throw;
             }
+        }
+        [HttpGet]
+        public IActionResult CreateEvent()
+        {
+            return View("~/Views/Google/Create.cshtml");
         }
     }
 }
