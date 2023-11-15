@@ -1,5 +1,4 @@
-﻿<!-- Views/Google/Create.cshtml -->
-@model EventModel
+﻿@model EventModel
 @Html.AntiForgeryToken()
 @{
     ViewData["Title"] = "CreateEvent";
@@ -27,6 +26,15 @@
         <label asp-for="EndDateTime"></label>
         <input asp-for="EndDateTime" type="datetime-local" class="form-control" />
     </div>
-    
+    <div class="form-group">
+        <label for="googleAccounts">Select Google Account:</label>
+        <select class="form-control" id="googleAccounts" name="googleAccount">
+            @foreach (var testUser in ViewBag.TestUsers)
+            {
+                <option value="@testUser">@testUser</option>
+            }
+        </select>
+    </div>
+
     <button type="submit" class="btn btn-primary">Create Event</button>
 </form>
