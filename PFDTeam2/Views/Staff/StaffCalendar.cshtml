@@ -4,12 +4,24 @@
 
 <h2>Google Calendar</h2>
 
+<div id="legends-container">
+    <div class="legend">
+        <span class="legend-icon" style="background-color: green;"></span> Completed
+    </div>
+    <div class="legend">
+        <span class="legend-icon" style="background-color: orangered;"></span> In Progress
+    </div>
+    <div class="legend">
+        <span class="legend-icon" style="background-color: red;"></span> Not Started
+    </div>
+</div>
+
 <div id="calendar"></div>
 
+<div id="create-event-container">
+    <a asp-controller="GoogleCalendar" asp-action="CreateEvent" class="btn btn-primary">Create Event</a>
+</div>
 
-<p>
-    <a asp-controller="GoogleCalendar" asp-action="CreateEvent">Create Event</a>
-</p>
 @section Scripts {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -32,7 +44,15 @@
                         type: 'GET',
                         dataType: 'json',
                         success: function (data) {
-                            var events = data;
+                            var events = data.map(function (item) {
+                                return {
+                                    title: item.title,
+                                    start: item.start,
+                                    end: item.end,
+                                    color: getColorForProgress(item.progress)
+                                };
+                            });
+
                             callback(events);
                         },
                         error: function () {
@@ -41,6 +61,52 @@
                     });
                 }
             });
+
+            function getColorForProgress(progress) {
+                // Customize this function to return appropriate color based on progress
+                // For example, green for completed, amber for in-progress, red for not started
+                if (progress === 'completed') {
+                    return 'green';
+                } else if (progress === 'in-progress') {
+                    return 'orangered';
+                } else {
+                    return 'red';
+                }
+            }
         });
     </script>
+
+    <style>
+        #legends-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .legend {
+            text-align: center;
+        }
+
+        .legend-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        #create-event-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .btn-primary {
+            background-color: turquoise;
+            color: white;
+        }
+    </style>
 }
