@@ -1,4 +1,5 @@
 ﻿const { App } = require('@slack/bolt');
+//const yourModule = require('./JavaScript');
 
 const app = new App({
     signingSecret: 'b621c3bf14cecca722bbf13fb0b0960b',
@@ -28,6 +29,12 @@ app.event('app_home_opened', ({ event, say }) => {
             },
         ]
     });
+});
+
+// Handle button clicks
+app.action('button_click', async ({ ack, say }) => {
+    await ack();
+    say('Button clicked!');
 });
 
 // Respond to user messages

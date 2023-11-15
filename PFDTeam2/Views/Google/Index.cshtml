@@ -5,11 +5,34 @@
 <h2>Google Calendar</h2>
 
 <div id="calendar"></div>
+<partial name="~/Views/Google/_EventModal.cshtml" />
 
+<!-- Modal for Event Details -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="eventModalTitle"></p>
+                <p id="eventModalDescription"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="deleteEventButton">Delete Event</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <p>
     <a asp-controller="GoogleCalendar" asp-action="CreateEvent">Create Event</a>
 </p>
+
 @section Scripts {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -25,7 +48,7 @@
                 },
                 defaultDate: '@DateTime.Now.ToString("yyyy-MM-dd")',
                 editable: false,
-                eventLimit: true, // allow "more" link when too many events,
+                eventLimit: true,
                 events: function (start, end, timezone, callback) {
                     $.ajax({
                         url: '/GoogleCalendar/GetEvents',
@@ -39,7 +62,36 @@
                             alert('Error fetching events');
                         }
                     });
+                },
+                eventClick: function (event) {
+                    // Display event details in the modal
+                    $('#eventModalTitle').text(event.title);
+                    $('#eventModalDescription').text(event.description);
+                    console.log('Event ID:', event.id);
+
+                    // Set up delete button click event
+                    $('#deleteEventButton').off('click').on('click', function () {
+                        // Make an Ajax request to delete the event
+                        $.ajax({
+                            url: '/GoogleCalendar/DeleteEvent',
+                            type: 'POST',
+                            data: { eventId: event.id },
+                            success: function () {
+                                // Refresh the calendar after deletion
+                                $('#calendar').fullCalendar('refetchEvents');
+                                // Close the modal
+                                $('#eventModal').modal('hide');
+                            },
+                            error: function () {
+                                alert('Error deleting event');
+                            }
+                        });
+                    });
+
+                    // Show the modal
+                    $('#eventModal').modal('show');
                 }
+
             });
         });
     </script>

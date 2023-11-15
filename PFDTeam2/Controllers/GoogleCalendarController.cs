@@ -97,6 +97,7 @@ namespace PFDTeam2.Controllers
             // Convert events to a format suitable for FullCalendar
             var formattedEvents = events.Select(e => new
             {
+                id = e.Id,  // Include the event ID
                 title = e.Summary,
                 start = e.Start.DateTime,
                 end = e.End.DateTime
@@ -143,7 +144,7 @@ namespace PFDTeam2.Controllers
 
                 // Log the created event ID using ILogger
                 _logger.LogInformation("Event created: {EventId}", createdEvent.Id);
-
+                model.Id = createdEvent.Id;
                 // Redirect back to the Index action after creating the event
                 return RedirectToAction("Index");
             }
@@ -268,6 +269,42 @@ namespace PFDTeam2.Controllers
         {
             public string email { get; set; }
             // Add other user properties as needed
+        }
+
+        // Controllers/GoogleCalendarController.cs
+        [HttpPost]
+        public IActionResult DeleteEvent(string eventId)
+        {
+            try
+            {
+                UserCredential credential;
+                string[] Scopes = { "https://www.googleapis.com/auth/calendar" };
+                using (var stream = new FileStream(ClientSecretPath, FileMode.Open, FileAccess.Read))
+                {
+                    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                        GoogleClientSecrets.FromStream(stream).Secrets,
+                        Scopes,
+                        "user",
+                        CancellationToken.None,
+                        new FileDataStore(CredentialsFolderPath)).Result;
+                }
+
+                var service = new CalendarService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = ApplicationName,
+                });
+
+                // Delete the event using the eventId
+                service.Events.Delete("primary", eventId).Execute();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                return BadRequest();
+            }
         }
     }
 }
