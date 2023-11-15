@@ -1,0 +1,13 @@
+﻿@model string
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<h2>Feedback Processing</h2>
+
+<form action="@Url.Action("ProcessFeedback")" method="post">
+    <label for="feedback">Enter Feedback:</label>
+    <input type="text" name="feedback" required>
+    <input type="submit" value="Process Feedback">
+</form>
