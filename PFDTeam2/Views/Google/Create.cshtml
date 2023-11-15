@@ -28,13 +28,13 @@
     </div>
     <div class="form-group">
         <label for="googleAccounts">Select Google Account:</label>
-        <select class="form-control" id="googleAccounts" name="googleAccount">
+        <select asp-for="GoogleAccount" class="form-control" id="googleAccounts">
+            <option value="">Select an account</option>
             @foreach (var testUser in ViewBag.TestUsers)
             {
                 <option value="@testUser">@testUser</option>
             }
         </select>
     </div>
-
     <button type="submit" class="btn btn-primary">Create Event</button>
 </form>
