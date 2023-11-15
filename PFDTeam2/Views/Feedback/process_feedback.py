@@ -12,8 +12,7 @@ def process_feedback(feedback_text):
     print("Named Entities:", entities)
 
     # Additional processing logic can be added based on requirements
+    relvant_keywords = ["onboarding", "employee", "improvement"]
+    is_relevant = any(keyword in feedback_text.lower() for keyword in relevant_keywords)
 
-if __name__ == "__main__":
-    # Example: Process feedback from command line
-    feedback = input("Enter feedback: ")
-    process_feedback(feedback)
+    return is_relevant

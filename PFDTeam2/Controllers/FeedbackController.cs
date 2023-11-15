@@ -16,7 +16,7 @@ namespace PFDTeam2.Controllers
             using (Py.GIL())
             {
                 dynamic feedbackProcessor = Py.Import("process_feedback");
-                feedbackProcessor.process_feedback(feedback);
+                bool isRelevant = feedbackProcessor.process_feedback(feedback);
             }
 
             return RedirectToAction("Index");
