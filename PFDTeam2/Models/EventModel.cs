@@ -9,6 +9,11 @@ namespace PFDTeam2.Models
         public string Description { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
+        public string Progress { get; set; } = "not-started";
+
+
+
+
         [Required(ErrorMessage = "Please select a Google Account")]
         public List<GoogleAccount> GoogleAccount { get; set; }
 

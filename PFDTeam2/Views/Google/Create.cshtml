@@ -4,38 +4,83 @@
     ViewData["Title"] = "CreateEvent";
 }
 
-<h2>Create Event</h2>
+<style>
+    body {
+        margin-top: 30px; /* Add some space on top */
+    }
 
-<form asp-controller="GoogleCalendar" asp-action="CreateEvent" method="post">
-    <div class="form-group">
-        <label asp-for="Summary"></label>
-        <input asp-for="Summary" class="form-control" />
-    </div>
+    .btn-turquoise {
+        background-color: turquoise;
+        color: white;
+        transition: background-color 0.3s, color 0.3s;
+        margin-top: 3%;
+    }
 
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-    </div>
+    .btn-turquoise:hover {
+        background-color: blue; /* Set hover color to blue */
+        color: white;
+    }
 
-    <div class="form-group">
-        <label asp-for="StartDateTime"></label>
-        <input asp-for="StartDateTime" type="datetime-local" class="form-control" />
-    </div>
+    .wider-form {
+        width: 70%;
+        margin: auto; /* Center the form */
+    }
 
-    <div class="form-group">
-        <label asp-for="EndDateTime"></label>
-        <input asp-for="EndDateTime" type="datetime-local" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="googleAccounts">Select Google Account:</label>
-        <select asp-for="GoogleAccount" class="form-control" id="googleAccounts">
-            <option value="">Select an account</option>
-            @foreach (var testUser in ViewBag.TestUsers)
-            {
-                <option value="@testUser">@testUser</option>
-            }
-        </select>
-        <span asp-validation-for="GoogleAccount" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Create Event</button>
-</form>
+    .form-control {
+        font-size: 18px;
+    }
+
+    .form-control-textarea {
+        font-size: 18px;
+        height: 150px;
+    }
+
+    .form-label {
+        font-size: 16px;
+    }
+
+    .form-title {
+        font-size: 30px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+</style>
+
+<div class="d-flex justify-content-center">
+    <form asp-controller="GoogleCalendar" asp-action="CreateEvent" method="post" class="wider-form">
+        <h2 class="text-center form-title">Create Event</h2>
+
+        <div class="form-group">
+            <label asp-for="Summary" class="form-label"></label>
+            <input asp-for="Summary" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control form-control-textarea"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StartDateTime" class="form-label"></label>
+            <input asp-for="StartDateTime" type="datetime-local" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EndDateTime" class="form-label"></label>
+            <input asp-for="EndDateTime" type="datetime-local" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="googleAccounts" class="form-label">Select Google Account:</label>
+            <select class="form-control" asp-for="GoogleAccount" id="googleAccounts">
+                <option value="">Select an account</option>
+                @foreach (var testUser in ViewBag.TestUsers)
+                {
+                    <option value="@testUser">@testUser</option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-turquoise btn-block">Create Event/Task</button>
+    </form>
+</div>
