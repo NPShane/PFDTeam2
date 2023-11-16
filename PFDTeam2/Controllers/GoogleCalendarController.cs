@@ -100,7 +100,8 @@ namespace PFDTeam2.Controllers
                 id = e.Id,  // Include the event ID
                 title = e.Summary,
                 start = e.Start.DateTime,
-                end = e.End.DateTime
+                end = e.End.DateTime,
+                progress = e.ExtendedProperties
             });
 
             return Json(formattedEvents);
@@ -113,6 +114,7 @@ namespace PFDTeam2.Controllers
             {
                 UserCredential credential;
                 string[] Scopes = { "https://www.googleapis.com/auth/calendar" };
+
                 using (var stream = new FileStream(ClientSecretPath, FileMode.Open, FileAccess.Read))
                 {
                     credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
@@ -129,13 +131,21 @@ namespace PFDTeam2.Controllers
                     ApplicationName = ApplicationName,
                 });
 
-                // Create a new event
+                // Create a new event with progress status
                 var newEvent = new Event
                 {
                     Summary = model.Summary,
                     Description = model.Description,
                     Start = new EventDateTime { DateTime = model.StartDateTime },
                     End = new EventDateTime { DateTime = model.EndDateTime },
+                    //Progress = model.Progress,
+                    ExtendedProperties = new Event.ExtendedPropertiesData
+                    {
+                        Shared = new Dictionary<string, string>
+                {
+                    { "Progress", model.Progress } // Set the Progress property from the model
+                }
+                    }
                 };
 
                 // Add the event to the primary calendar
@@ -145,8 +155,10 @@ namespace PFDTeam2.Controllers
                 // Log the created event ID using ILogger
                 _logger.LogInformation("Event created: {EventId}", createdEvent.Id);
                 model.Id = createdEvent.Id;
+
                 // Redirect back to the Index action after creating the event
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return View("~/Views/Staff/StaffCalendar.cshtml");
             }
             catch (Exception ex)
             {
@@ -157,6 +169,8 @@ namespace PFDTeam2.Controllers
                 throw;
             }
         }
+
+
 
         [HttpGet]
         public IActionResult CreateEvent()
@@ -306,5 +320,93 @@ namespace PFDTeam2.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost]
+        public IActionResult UpdateEventProgress(string eventId, string progress)
+        {
+            try
+            {
+                if (!IsValidProgress(progress))
+                {
+                    // Log an error if an invalid progress value is provided
+                    _logger.LogError("Invalid progress value: {Progress}", progress);
+                    return BadRequest("Invalid progress value");
+                }
+
+                // Use the Google Calendar API to update the event progress
+                UserCredential credential;
+                string[] Scopes = { "https://www.googleapis.com/auth/calendar" };
+
+                using (var stream = new FileStream(ClientSecretPath, FileMode.Open, FileAccess.Read))
+                {
+                    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                        GoogleClientSecrets.FromStream(stream).Secrets,
+                        Scopes,
+                        "user", // Use a default user for this purpose
+                        CancellationToken.None,
+                        new FileDataStore(CredentialsFolderPath)).Result;
+                }
+
+                var service = new CalendarService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = ApplicationName,
+                });
+
+                // Fetch the event from Google Calendar
+                var existingEvent = service.Events.Get("primary", eventId).Execute();
+
+                if (existingEvent == null)
+                {
+                    // Log an error if the event is not found
+                    _logger.LogError("Event not found with ID: {EventId}", eventId);
+                    return NotFound("Event not found");
+                }
+
+                // Check if ExtendedProperties is null
+                if (existingEvent.ExtendedProperties == null)
+                {
+                    existingEvent.ExtendedProperties = new Event.ExtendedPropertiesData();
+                }
+
+                // Check if Shared is null
+                if (existingEvent.ExtendedProperties.Shared == null)
+                {
+                    existingEvent.ExtendedProperties.Shared = new Dictionary<string, string>();
+                }
+
+                // Update the progress property of the event
+                existingEvent.ExtendedProperties.Shared["Progress"] = progress;
+
+                // Update the event on Google Calendar
+                var request = service.Events.Update(existingEvent, "primary", eventId);
+                var updatedEvent = request.Execute();
+
+                // Log the event progress update using ILogger
+                _logger.LogInformation("Event progress updated: EventId={EventId}, Progress={Progress}", eventId, progress);
+
+                return Ok(); // Return a success response
+            }
+            catch (Google.GoogleApiException gex)
+            {
+                // Log Google API-specific exceptions
+                _logger.LogError(gex, "Google API Exception updating event progress");
+                return StatusCode(500, $"Google API Exception updating event progress: {gex.Error.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Log any other exceptions using ILogger
+                _logger.LogError(ex, "Error updating event progress");
+                return StatusCode(500, $"Error updating event progress: {ex.Message}"); // Return a 500 Internal Server Error response with more details
+            }
+        }
+
+        private bool IsValidProgress(string progress)
+        {
+            // Check if the progress value is one of the allowed values
+            return progress == "completed" || progress == "in-progress" || progress == "not-started";
+        }
+
+
     }
 }

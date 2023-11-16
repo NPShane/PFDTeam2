@@ -9,6 +9,10 @@ namespace PFDTeam2.Models
         public string Description { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
+        public string Progress { get; set; } = "not-started";
+
+
+
 
         public List<GoogleAccount> GoogleAccounts { get; set; }
 
