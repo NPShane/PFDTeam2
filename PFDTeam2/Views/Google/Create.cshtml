@@ -16,12 +16,13 @@
     }
 
         .btn-turquoise:hover {
-            background-color: blue;
+            background-color: blue; /* Set hover color to blue */
             color: white;
         }
 
     .wider-form {
         width: 70%;
+        margin: auto; /* Center the form */
     }
 
     .form-control {
@@ -81,19 +82,3 @@
         <button type="submit" class="btn btn-turquoise btn-block">Create Event/Task</button>
     </form>
 </div>
-    <div class="form-group">
-        <label asp-for="EndDateTime"></label>
-        <input asp-for="EndDateTime" type="datetime-local" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="googleAccounts">Select Google Account:</label>
-        <select asp-for="GoogleAccount" class="form-control" id="googleAccounts">
-            <option value="">Select an account</option>
-            @foreach (var testUser in ViewBag.TestUsers)
-            {
-                <option value="@testUser">@testUser</option>
-            }
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Create Event</button>
-</form>
