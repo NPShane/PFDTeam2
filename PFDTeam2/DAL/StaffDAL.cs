@@ -15,8 +15,7 @@ namespace PFDTeam2.DAL
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json");
             Configuration = builder.Build();
-            string strConn = Configuration.GetConnectionString(
-            "OnboardingAppConnectionString");
+            string strConn = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=OnboardingApp;Integrated Security=True;";
             //Instantiate a SqlConnection object with the
             //Connection String read.
             conn = new SqlConnection(strConn);
@@ -136,27 +135,156 @@ namespace PFDTeam2.DAL
             return appointment ?? string.Empty;
         }
 
-        public void AddFeedback(string feedbackText, bool isRelevant, bool actionTaken)
+        public void AddFeedback(string? feedbackText, bool isRelevant, bool sentiment, bool actionTaken, string? response)
         {
             try
             {
-                string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=OnboardingApp;Integrated Security=True;";
-                using SqlConnection conn = new(connectionString);
-                conn.Open();
-
                 // Use a parameterized query to prevent SQL injection
-                string sql = "INSERT INTO [Feedback] (Text, IsRelevant, ActionTaken) VALUES (@Text, @IsRelevant, @ActionTaken)";
+                string sql = "INSERT INTO Feedback (Text, IsRelevant, Positivity, ActionTaken, Response) VALUES (@Text, @IsRelevant, @Sentiment, @ActionTaken, @Response)";
 
                 using SqlCommand cmd = new(sql, conn);
-                cmd.Parameters.AddWithValue("@Text", feedbackText);
+                conn.Open();
+                cmd.Parameters.AddWithValue("@Text", (object)feedbackText ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@IsRelevant", isRelevant);
+                cmd.Parameters.AddWithValue("@Sentiment", sentiment);
                 cmd.Parameters.AddWithValue("@ActionTaken", actionTaken);
+                cmd.Parameters.AddWithValue("@Response", (object)response ?? DBNull.Value);
                 cmd.ExecuteNonQuery();
             }
             finally
             {
                 conn.Close();
             }
+        }
+
+        public List<Feedback> GetFeedbacks()
+        {
+            List<Feedback> feedbacks = new();
+
+            using (SqlCommand cmd = conn.CreateCommand())
+            {
+                // Specify the SELECT SQL statement to get all pending feedback/enquiries
+                cmd.CommandText = "SELECT * FROM Feedback";
+
+                // Open the database connection
+                conn.Open();
+
+                // Execute the SELECT SQL statement
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Feedback feedback = new Feedback
+                        {
+                            FeedbackId = reader.GetInt32(reader.GetOrdinal("FeedbackId")),
+                            IsRelevant = reader.GetBoolean(reader.GetOrdinal("IsRelevant")),
+                            IsPositive = reader.GetBoolean(reader.GetOrdinal("Positivity")),
+                            ActionTaken = reader.GetBoolean(reader.GetOrdinal("ActionTaken"))
+                        };
+
+                        // Check if the text field is NULL before reading its value
+                        if (!reader.IsDBNull(reader.GetOrdinal("Text")))
+                        {
+                            feedback.Text = reader.GetString(reader.GetOrdinal("Text"));
+                        }
+                        else
+                        {
+                            feedback.Text = null; // Set it to null
+                        }
+
+                        // Check if the Response field is NULL before reading its value
+                        if (!reader.IsDBNull(reader.GetOrdinal("Response")))
+                        {
+                            feedback.Response = reader.GetString(reader.GetOrdinal("Response"));
+                        }
+                        else
+                        {
+                            feedback.Response = null; // Set the Response to null
+                        }
+
+                        feedbacks.Add(feedback);
+                    }
+                }
+
+                // Close the database connection
+                conn.Close();
+            }
+
+            return feedbacks;
+        }
+
+        public Feedback GetFeedback(int id)
+        {
+            Feedback feedback = null;
+
+            using (SqlCommand cmd = conn.CreateCommand())
+            {
+                // Specify the SELECT SQL statement to get the feedback/enquiry by ID
+                cmd.CommandText = "SELECT * FROM Feedback WHERE FeedbackId = @Id";
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                // Open the database connection
+                conn.Open();
+
+                // Execute the SELECT SQL statement
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        feedback = new Feedback
+                        {
+                            FeedbackId = reader.GetInt32(reader.GetOrdinal("FeedbackId")),
+                            IsRelevant = reader.GetBoolean(reader.GetOrdinal("IsRelevant")),
+                            IsPositive = reader.GetBoolean(reader.GetOrdinal("Positivity")),
+                            ActionTaken = reader.GetBoolean(reader.GetOrdinal("ActionTaken"))
+                        };
+
+                        // Check if the text field is NULL before reading its value
+                        if (!reader.IsDBNull(reader.GetOrdinal("Text")))
+                        {
+                            feedback.Text = reader.GetString(reader.GetOrdinal("Text"));
+                        }
+                        else
+                        {
+                            feedback.Text = null; // Set it to null
+                        }
+
+                        // Check if the Response field is NULL before reading its value
+                        if (!reader.IsDBNull(reader.GetOrdinal("Response")))
+                        {
+                            feedback.Response = reader.GetString(reader.GetOrdinal("Response"));
+                        }
+                        else
+                        {
+                            feedback.Response = null; // Set the Response to null
+                        }
+                    }
+                }
+
+                // Close the database connection
+                conn.Close();
+            }
+
+            return feedback;
+        }
+
+        public void Respond(int id, string? response)
+        {
+            using SqlCommand cmd = conn.CreateCommand();
+
+            // Specify the UPDATE SQL statement to update the response
+            cmd.CommandText = "UPDATE Feedback SET Positivity = 1, Response = @Response WHERE FeedbackId = @Id";
+            cmd.Parameters.AddWithValue("@Id", id);
+            cmd.Parameters.AddWithValue("@Response", response);
+
+            // Open the database connection
+            conn.Open();
+
+            // Execute the UPDATE SQL statement
+            cmd.ExecuteNonQuery();
+
+            // Close the database connection
+            conn.Close();
         }
     }
 }
