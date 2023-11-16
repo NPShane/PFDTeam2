@@ -140,10 +140,12 @@ namespace PFDTeam2.DAL
         {
             try
             {
+                string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=OnboardingApp;Integrated Security=True;";
+                using SqlConnection conn = new(connectionString);
                 conn.Open();
 
                 // Use a parameterized query to prevent SQL injection
-                string sql = "INSERT INTO Feedback (Text, IsRelevant, ActionTaken) VALUES (@Text, @IsRelevant, @ActionTaken)";
+                string sql = "INSERT INTO [Feedback] (Text, IsRelevant, ActionTaken) VALUES (@Text, @IsRelevant, @ActionTaken)";
 
                 using SqlCommand cmd = new(sql, conn);
                 cmd.Parameters.AddWithValue("@Text", feedbackText);
