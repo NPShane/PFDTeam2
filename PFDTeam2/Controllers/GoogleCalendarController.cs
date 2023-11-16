@@ -98,6 +98,7 @@ namespace PFDTeam2.Controllers
             var formattedEvents = events.Select(e => new
             {
                 id = e.Id,  // Include the event ID
+                description = e.Description,
                 title = e.Summary,
                 start = e.Start.DateTime,
                 end = e.End.DateTime,
