@@ -149,7 +149,7 @@ namespace PFDTeam2.Controllers
                 };
 
                 // Add the event to the primary calendar
-                var request = service.Events.Insert(newEvent, "primary");
+                var request = service.Events.Insert(newEvent, googleAccount);
                 var createdEvent = request.Execute();
 
                 // Log the created event ID using ILogger

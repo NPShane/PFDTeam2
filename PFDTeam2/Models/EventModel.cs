@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using System.ComponentModel.DataAnnotations;
 namespace PFDTeam2.Models
 {
     public class EventModel
@@ -14,6 +14,7 @@ namespace PFDTeam2.Models
 
 
 
+        [Required(ErrorMessage = "Please select a Google Account")]
         public List<GoogleAccount> GoogleAccount { get; set; }
 
         public string SelectedGoogleAccount { get; set; }

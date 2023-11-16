@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "CreateEvent";
 }
+
 <style>
     body {
         margin-top: 30px; /* Add some space on top */
@@ -15,10 +16,10 @@
         margin-top: 3%;
     }
 
-        .btn-turquoise:hover {
-            background-color: blue; /* Set hover color to blue */
-            color: white;
-        }
+    .btn-turquoise:hover {
+        background-color: blue; /* Set hover color to blue */
+        color: white;
+    }
 
     .wider-form {
         width: 70%;
@@ -71,7 +72,8 @@
 
         <div class="form-group">
             <label for="googleAccounts" class="form-label">Select Google Account:</label>
-            <select class="form-control" id="googleAccounts" name="googleAccount">
+            <select class="form-control" asp-for="GoogleAccount" id="googleAccounts">
+                <option value="">Select an account</option>
                 @foreach (var testUser in ViewBag.TestUsers)
                 {
                     <option value="@testUser">@testUser</option>
