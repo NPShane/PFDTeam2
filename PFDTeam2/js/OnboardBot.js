@@ -37,7 +37,8 @@ app.action('button_click', async ({ ack, say }) => {
 });
 
 // Respond to user messages
-app.message('hello', ({ message, say }) => {
+app.message(/.*/, ({ message, say }) => {  //handle any message
+    console.log('Received message:', message.text);
     say(`Hello <@${message.user}>! How can I assist you today?`);
 });
 
