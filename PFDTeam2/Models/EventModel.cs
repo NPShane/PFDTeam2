@@ -10,7 +10,7 @@ namespace PFDTeam2.Models
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
 
-        public List<GoogleAccount> GoogleAccounts { get; set; }
+        public List<GoogleAccount> GoogleAccount { get; set; }
 
         public string SelectedGoogleAccount { get; set; }
     }

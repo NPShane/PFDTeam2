@@ -145,6 +145,7 @@ namespace PFDTeam2.Controllers
                 // Log the created event ID using ILogger
                 _logger.LogInformation("Event created: {EventId}", createdEvent.Id);
                 model.Id = createdEvent.Id;
+
                 // Redirect back to the Index action after creating the event
                 return RedirectToAction("Index");
             }
@@ -157,7 +158,53 @@ namespace PFDTeam2.Controllers
                 throw;
             }
         }
+        
+        [HttpGet]
+        public IActionResult RetrieveCalendars(string specificUser)
+        {
+            try
+            {
+                // Fetch the list of test users from the OAuth consent screen
+                var testUsers = GetTestUsersFromOAuthConsentScreen();
 
+                // Check if the specific user is a valid test user
+                if (!testUsers.Contains(specificUser))
+                {
+                    // Handle the case where the specific user is not a valid test user
+                    return BadRequest("Invalid user");
+                }
+
+                // Authenticate with the credentials of the specific user
+                var credential = GetCredentialForTestUser(specificUser);
+
+                var service = new CalendarService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = ApplicationName,
+                });
+
+                // Fetch the list of calendars for the specific user
+                var calendars = service.CalendarList.List().Execute().Items;
+
+                // Process the list of calendars (you may want to return or store this information)
+                foreach (var calendar in calendars)
+                {
+                    // Process each calendar as needed
+                    Console.WriteLine($"Calendar for {specificUser}: {calendar.Summary}");
+                }
+
+                // Redirect or return a response as needed
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Log any exceptions using ILogger
+                _logger.LogError(ex, "Error retrieving calendars");
+
+                // Handle the exception or rethrow it
+                throw;
+            }
+        }
         [HttpGet]
         public IActionResult CreateEvent()
         {
@@ -181,55 +228,7 @@ namespace PFDTeam2.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult RetrieveCalendars(string specificUser)
-        {
-            try
-            {
-                // Fetch the list of test users from the OAuth consent screen
-                var testUsers = GetTestUsersFromOAuthConsentScreen();
-
-                // Check if the specific user is a valid test user
-                if (!testUsers.Contains(specificUser))
-                {
-                    // Handle the case where the specific user is not a valid test user
-                    return BadRequest("Invalid user");
-                }
-
-                foreach (var testUser in testUsers)
-                {
-                    // Authenticate with the credentials of the specific user
-                    var credential = GetCredentialForTestUser(testUser);
-
-                    var service = new CalendarService(new BaseClientService.Initializer()
-                    {
-                        HttpClientInitializer = credential,
-                        ApplicationName = ApplicationName,
-                    });
-
-                    // Fetch the list of calendars for the specific user
-                    var calendars = service.CalendarList.List().Execute().Items;
-
-                    // Process the list of calendars (you may want to return or store this information)
-                    foreach (var calendar in calendars)
-                    {
-                        // Process each calendar as needed
-                        Console.WriteLine($"Calendar for {testUser}: {calendar.Summary}");
-                    }
-                }
-
-                // Redirect or return a response as needed
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                // Log any exceptions using ILogger
-                _logger.LogError(ex, "Error retrieving calendars");
-
-                // Handle the exception or rethrow it
-                throw;
-            }
-        }
+        
 
         private List<string> GetTestUsersFromOAuthConsentScreen()
         {
