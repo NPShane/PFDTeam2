@@ -14,7 +14,7 @@ namespace PFDTeam2.Models
 
 
 
-        public List<GoogleAccount> GoogleAccounts { get; set; }
+        public List<GoogleAccount> GoogleAccount { get; set; }
 
         public string SelectedGoogleAccount { get; set; }
     }
