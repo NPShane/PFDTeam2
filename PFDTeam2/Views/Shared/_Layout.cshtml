@@ -8,31 +8,716 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PFDTeam2.styles.css" asp-append-version="true" />
 </head>
+<style>
+        @@import url('https://fonts.googleapis.com/css2?family=Fasthand&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            font-family: 'Poppins';
+            margin: 0;
+            padding: 0;
+            scroll-padding-top: 1rem;
+            scroll-behavior: smooth;
+            list-style: none;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        /* -------------------- Global variable for the colors -------------------- */
+        :root {
+            --main-color: red;
+            --text-color: black;
+            --bg-color: #fff;
+            --yellow: #f9d806;
+            --light-yellow: #ffee80;
+            --black: #130f40;
+            --light-color: #666;
+            --box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+            --border: .1rem solid rgba(0,0,0,.1);
+            --color-primary: #009579;
+            --color-primary-dark: #007f67;
+            --color-secondary: #252c6a;
+            --color-error: #cc3333;
+            --color-success: #4bb544;
+            --pink: #e84393;
+            --border-radius: 4px;
+            --green: #27ae60;
+            --dark-color: #219150;
+            --black: #444;
+            --light-color: #666;
+            --border-hover: .1rem solid var(--black);
+        }
+
+        html {
+            font-size: 86.5%;
+            scroll-behavior: smooth;
+            scroll-padding-top: 6rem;
+            overflow-x: hidden;
+        }
+
+        section {
+            padding: 2rem 9%;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        body {
+            color: var(--text-color);
+        }
+
+        .container {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .heading {
+            text-align: center;
+            font-size: 4rem;
+            color: #333;
+            padding: 1rem;
+            margin: 2rem 0;
+            background: rgba(255, 51, 153,.05);
+        }
+
+            .heading span {
+                color: var(--pink);
+            }
+
+        header {
+            display: block;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+            header.shadow {
+                background: black;
+                box-shadow: 2px 4px 4px rgb(15 54 55 /20%);
+                transition: 1.5s;
+            }
+        /* -------------------- END -------------------- */
+
+        /* -------------------- Nav bar -------------------- */
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 35px;
+        }
+
+        #menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            display: none;
+        }
+
+
+        .logo {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+            .logo span {
+                color: var(--main-color);
+            }
+
+        .navbar {
+            display: flex;
+            column-gap: 2rem;
+        }
+
+            .navbar a {
+                color: white;
+                font-size: 1.2rem;
+                text-transform: uppercase;
+                font-weight: 500;
+            }
+
+                .navbar a:hover,
+                .navbar .active {
+                    color: var(--main-color);
+                    border-bottom: 3px solid var(--main-color);
+                }
+        /* -------------------- END -------------------- */
+
+
+        /*.black-container {
+            position: absolute;
+            background-color: darkblue;
+            opacity: 0.8; /* Adjust the opacity as needed */
+            width: 40%; /* Adjust the width as needed */
+            height: 200px; /* Adjust the height as needed */
+            top: 32%; /* Adjust the top position as needed */
+            left: 15%; /* Adjust the left position as needed */
+            transform: translateX(-50%); /* Center the container horizontally */
+            z-index: 0;
+            border-radius: 15px;
+        }*/
+
+        .login-register {
+            text-align: center;
+            margin-top: 20px;
+            z-index: 999;
+        }
+
+        .login-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+            .login-popup h2 {
+                margin-top: 0;
+                margin-bottom: 20px;
+            }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        /* -------------------- Homepage Banner -------------------- */
+        .home {
+            margin: auto;
+            width: 100%;
+            min-height: 640px;
+            display: flex;
+            align-items: center;
+            background: url(https://www.workato.com/product-hub/wp-content/uploads/2022/01/Dec-product-header-new-2.gif);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center left;
+        }
+
+
+        .home-text {
+            padding-left: 30px;
+            color: whitesmoke;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1.0); /* White shadow with alpha value 0.8 */
+            font-weight: bold;
+            /*transform: scale(1.1);*/
+        }
+
+        .hometext h1 {
+            font-size: 3.4rem;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1.0); /* Added text-shadow */
+        }
+
+        .home-text p {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin: 0.5rem 0 1.2rem;
+            color: white;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 1.0); /* Added text-shadow */
+        }
+        /* -------------------- END -------------------- */
+
+
+        /* -------------------- Login button -------------------- */
+        .btn:hover {
+            background: var(--yellow);
+        }
+
+        /* Login form container */
+        #login-btn .btn {
+            margin-top: 0;
+            text-shadow: none;
+        }
+
+        #login-btn i {
+            display: none;
+            font-size: 2.5rem;
+            color: lightyellow;
+            text-shadow: none;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 0px;
+            padding: .8rem 3rem;
+            background: white;
+            color: black;
+            cursor: pointer;
+            font-size: 15px;
+            border-radius: .5rem;
+            font-weight: 500;
+            text-align: center;
+            text-shadow: none;
+        }
+
+        .header.active {
+            padding: 2rem 9%;
+            box-shadow: var(--box-shadow);
+        }
+
+        .loginAlert {
+            width: 100%;
+            padding: 1rem 2rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #ffffff;
+            border: none;
+            border-radius: var(--border-radius);
+            outline: none;
+            cursor: pointer;
+            background: green;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        /* -------------------- END -------------------- */
+
+        #menu-btn {
+            font-size: 2.5rem;
+            color: var(--light-color);
+            display: none;
+        }
+
+
+        /* -------------------- END -------------------- */
+
+        .btn {
+            display: inline-block;
+            margin-top: 0px;
+            padding: .8rem 3rem;
+            background: white;
+            color: black;
+            cursor: pointer;
+            font-size: 15px;
+            border-radius: .5rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        #menu-btn {
+            font-size: 2.5rem;
+            color: var(--light-color);
+            display: none;
+        }
+
+        .btnss {
+            display: inline-block;
+            margin-top: 0px;
+            padding: .8rem 3rem;
+            background: var(--green);
+            color: black;
+            cursor: pointer;
+            font-size: 15px;
+            border-radius: .5rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+            .btnss:hover {
+                background: var(--color-primary-dark);
+            }
+
+        .btn:hover {
+            background: turquoise;
+            ;
+        }
+
+        .btns {
+            display: inline-block;
+            margin-top: 1rem;
+            border-radius: 5rem;
+            background: #333;
+            color: #fff;
+            padding: .6rem 2.5rem;
+            cursor: pointer;
+            font-size: 1.3rem;
+        }
+
+            .btns:hover {
+                background: var(--pink);
+            }
+        /* -------------------- About Us -------------------- */
+        .about .row {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 2rem 0;
+            padding-bottom: 3rem;
+        }
+
+            .about .row .video-container {
+                flex: 1 1 40rem;
+                position: relative;
+            }
+
+                .about .row .video-container video {
+                    width: 100%;
+                    border: 1.5rem solid var(--black);
+                    border-radius: 1rem;
+                    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .about .row .video-container h3 {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(200%);
+                    font-size: 2rem;
+                    background: #fff;
+                    width: 100%;
+                    padding: 0.4rem 0.8rem;
+                    text-align: center;
+                    mix-blend-mode: screen;
+                }
+
+            .about .row .content {
+                flex: 1 1 40rem;
+            }
+
+                .about .row .content h3 {
+                    font-size: 2.5rem;
+                    color: #333;
+                }
+
+                .about .row .content p {
+                    font-size: 1.2rem;
+                    color: #999;
+                    padding: .5rem 0;
+                    padding-top: 1rem;
+                    line-height: 1.5;
+                }
+        /* -------------------- END -------------------- */
+        /* -------------------- Subscribe page -------------------- */
+        .newsletter {
+            background: url(https://www.procurescape.com/wp-content/uploads/2023/03/Workato_Partner-Team-Bootcamp-002.jpeg) no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+            .newsletter form {
+                max-width: 35rem;
+                margin-left: auto;
+                text-align: center;
+                padding: 3rem 0;
+            }
+
+                .newsletter form h3 {
+                    font-size: 1.8rem;
+                    color: #fff;
+                    padding-bottom: .4rem;
+                    font-weight: normal;
+                }
+
+                .newsletter form .box {
+                    width: 100%;
+                    margin: .7rem 0;
+                    padding: 1rem 1.2rem;
+                    font-size: 1.2rem;
+                    color: var(--black);
+                    border-radius: .9rem;
+                    text-transform: none;
+                }
+        /* -------------------- END -------------------- */
+        /* -------------------- Contact us page -------------------- */
+        .contact .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+            .contact .row .map {
+                flex: 1 1 42rem;
+                width: 100%;
+                padding: 2rem;
+                box-shadow: var(--box-shadow);
+                border: var(--border);
+                border-radius: .5rem;
+                height: 50rem;
+            }
+
+            .contact .row form {
+                padding: 2rem;
+                flex: 1 1 42rem;
+                box-shadow: var(--box-shadow);
+                border: var(--border);
+                text-align: center;
+                border-radius: .5rem;
+            }
+
+                .contact .row form h3 {
+                    font-size: 3rem;
+                    color: var(--black);
+                    padding-bottom: 1rem;
+                }
+
+                .contact .row form .box {
+                    width: 100%;
+                    border-radius: .5rem;
+                    padding: 1rem 1.2rem;
+                    font-size: 1.6rem;
+                    text-transform: none;
+                    border: var(--border);
+                    margin: .7rem 0;
+                }
+
+                .contact .row form textarea {
+                    height: 15rem;
+                    resize: none;
+                }
+
+        .contactheadings {
+            padding-bottom: 2rem;
+            text-align: center;
+            font-size: 4.5rem;
+            color: var(--black);
+        }
+
+        .bluebold {
+            color: turquoise;
+        }
+        /* -------------------- END -------------------- */
+        /* -------------------- Footer -------------------- */
+        .footer .box-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+            .footer .box-container .box {
+                flex: 1 1 25rem;
+            }
+
+                .footer .box-container .box h3 {
+                    color: #333;
+                    font-size: 2.5rem;
+                    padding: 1rem 0;
+                }
+
+                .footer .box-container .box a {
+                    display: block;
+                    color: #666;
+                    font-size: 1.5rem;
+                    padding: 1rem 0;
+                }
+
+                    .footer .box-container .box a:hover {
+                        color: var(--pink);
+                        text-decoration: underline;
+                    }
+
+                .footer .box-container .box img {
+                    margin-top: 1rem;
+                    width: 60%;
+                }
+
+        .inner-footer {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+
+        .social-links {
+            display: flex;
+        }
+
+            .social-links ul {
+                padding: 10px;
+                display: flex;
+                width: 400px;
+                height: 80px;
+                margin: auto;
+            }
+
+        .social-items {
+            list-style: none;
+        }
+
+            .social-items a {
+                padding: 10px 30px;
+                font-size: 40px;
+                color: white;
+            }
+
+                .social-items a:hover {
+                    color: red;
+                }
+
+        .outer-footer {
+            padding: 15px;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            background-color: #191919;
+        }
+
+        /* -------------------- END -------------------- */
+
+        @@media (max-width:1280px) {
+            html {
+                font-size: 55%;
+            }
+
+            header {
+                padding: 2rem;
+            }
+
+            section {
+                padding: 2rem;
+            }
+
+            .home {
+                background-position: left;
+            }
+        }
+
+        @@media (max-width: 1080px ) {
+            .container {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+        }
+
+
+
+        @@media (max-width: 991px) {
+            .nav {
+                padding: 15px 20px;
+            }
+
+            section {
+                padding: 3rem 0 1rem;
+            }
+
+            .home.text {
+                padding-left: 2rem;
+            }
+
+                .home.text h1 {
+                    font-size: 2.1rem;
+                }
+        }
+
+        @@media (max-width: 968px) {
+            .nav {
+                padding: 10px 0;
+            }
+
+            #menu-icon {
+                display: initial;
+            }
+
+            .navbar {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                display: flex;
+                flex-direction: column;
+                background: black;
+                row-gap: 0.5rem;
+                text-align: center;
+                box-shadow: 4px 4px 20px rgb(15 54 55 /20%);
+                clip-path: circle(0% at 0% 0%);
+                transition: 0.6s;
+            }
+
+                .navbar a {
+                    display: block;
+                    padding: 15px;
+                }
+
+                    .navbar a:hover,
+                    .navbar.active {
+                        border-bottom: none;
+                        background: black;
+                        color: var(--bg-color);
+                    }
+
+                .navbar.active {
+                    clip-path: circle(144% at 0% 0%);
+                }
+
+            .blog-container .box {
+                padding: 4px;
+            }
+        }
+
+        @@media (max-width: 360px) {
+            .home {
+                min-height: 500px;
+            }
+
+            .home-text h1 {
+                font-size: 2rem;
+            }
+
+            .home-text p br {
+                display: contents;
+            }
+        }
+
+        @@media (max-width: 968px) {
+
+
+            .section-3-wrapper {
+                flex-direction: column;
+            }
+
+            .feedback {
+                width: 350px;
+                height: 150px;
+                margin-top: 10px;
+            }
+
+            .feedback-desc {
+                width: 350px;
+                height: 140px;
+                font-size: 9.5px;
+                margin-right: 0px;
+            }
+
+                .feedback-desc .far {
+                    font-size: 25px;
+                }
+        }
+
+
+
+        @@media (max-width:450px) {
+            html {
+                font-size: 50%;
+            }
+
+            .heading {
+                font-size: 3rem;
+            }
+        }
+    </style>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PFDTeam2</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GenerateCalendar">Calendar</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <!-- Nav bar -->
+    @*<header>
+        <div class="nav container">
+            <i class='bx bx-menu' id="menu-icon"></i>
+            <a href="#" class="logo"> Workato <span class="symbol">&reg;</span></a>
+            <ul class="navbar">
+                <li><a href="~/Staff/Calendar"> Manage Employee Calendar   </a></li>
+                <li><a href="#about"> Slack </a></li>
+
+            </ul>
+        </div>
+    </header>*@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -47,6 +732,27 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        let header = document.querySelector("header");
+        let menu = document.querySelector(".navbar");
+
+        window.addEventListener("scroll", () => {
+            header.classList.toggle("shadow", window.scrollY > 0);
+        });
+
+        document.querySelector("#menu-icon").onclick = () => {
+            menu.classList.toggle("active");
+        };
+
+        /* remove shadow on scroll */
+        window.onscroll = () => {
+            menu.classList.remove("active");
+        };
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
+
 </body>
 </html>

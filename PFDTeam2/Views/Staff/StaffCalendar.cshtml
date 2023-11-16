@@ -2,14 +2,54 @@
     ViewData["Title"] = "GoogleCalendar";
 }
 
-<h2>Google Calendar</h2>
+
+<h2 class="calendar-title">Google Calendar</h2>
+
+<div id="legends-container">
+    <div class="legend" style="font-size: 16px;">
+        <span class="legend-icon" style="background-color: green;"></span> Completed
+    </div>
+    <div class="legend" style="font-size: 16px;">
+        <span class="legend-icon" style="background-color: gold;"></span> In Progress
+    </div>
+    <div class="legend" style="font-size: 16px;">
+        <span class="legend-icon" style="background-color: red;"></span> Not Started
+    </div>
+</div>
 
 <div id="calendar"></div>
 
+<div id="create-event-container">
+    <a asp-controller="GoogleCalendar" asp-action="CreateEvent" class="btn btn-primary">Create Event</a>
+</div>
 
-<p>
-    <a asp-controller="GoogleCalendar" asp-action="CreateEvent">Create Event</a>
-</p>
+<!-- Modal for Event Details -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="eventModalTitle" class="event-details"></p>
+                <p id="eventModalDescription" class="event-details-description"></p>
+                <!-- Display progress status -->
+                @*<p>Progress: <span id="eventModalProgress"></span></p>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="deleteEventButton">Delete Event</button>
+                <button type="button" class="btn btn-success" id="markAsDoneButton">Mark as Done</button>
+                <button type="button" class="btn btn-warning" id="markAsInProgressButton">Mark as In Progresss</button>
+                <button type="button" class="btn btn-danger" id="markAsNotStartedButton">Mark as Not Started</button>
+                @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -25,22 +65,186 @@
                 },
                 defaultDate: '@DateTime.Now.ToString("yyyy-MM-dd")',
                 editable: false,
-                eventLimit: true, // allow "more" link when too many events,
+                eventLimit: true,
                 events: function (start, end, timezone, callback) {
                     $.ajax({
                         url: '/GoogleCalendar/GetEvents',
                         type: 'GET',
                         dataType: 'json',
                         success: function (data) {
-                            var events = data;
+                            var events = data.map(function (item) {
+                                // Retrieve color from localStorage or use default
+                                var color = localStorage.getItem(item.id) || getColorForProgress(item.progress);
+                                return {
+                                    title: item.title,
+                                    start: item.start,
+                                    end: item.end,
+                                    color: color,
+                                    id: item.id,
+                                    description: item.description,
+                                    progress: item.progress // Add progress to the event object
+                                };
+                            });
+
                             callback(events);
                         },
                         error: function () {
                             alert('Error fetching events');
                         }
                     });
+                },
+
+                eventRender: function (event, element) {
+                    // Customize the rendering of each event
+                    element.find('.fc-title').css('font-size', '14px'); // Adjust the font size as needed
+                    element.find('.fc-time').css('font-size', '14px');
+                },
+
+                eventClick: function (event) {
+                    // Display event details in the modal
+                    $('#eventModalTitle').text(event.title);
+                    $('#eventModalDescription').text(event.description);
+                    // Display progress status in the modal
+                    $('#eventModalProgress').text(event.progress);
+
+                    // Set up delete button click event
+                    $('#deleteEventButton').off('click').on('click', function () {
+                        // Make an Ajax request to delete the event
+                        $.ajax({
+                            url: '/GoogleCalendar/DeleteEvent',
+                            type: 'POST',
+                            data: { eventId: event.id },
+                            success: function () {
+                                // Refresh the calendar after deletion
+                                $('#calendar').fullCalendar('refetchEvents');
+                                // Close the modal
+                                $('#eventModal').modal('hide');
+                            },
+                            error: function () {
+                                alert('Error deleting event');
+                            }
+                        });
+                    });
+
+                    // Set up mark as done button click event
+                    $('#markAsDoneButton').off('click').on('click', function () {
+                        // Update the event color directly in the calendar
+                        event.color = 'green';
+                        // Save color to localStorage
+                        localStorage.setItem(event.id, 'green');
+                        $('#calendar').fullCalendar('updateEvent', event);
+                        // Close the modal
+                        $('#eventModal').modal('hide');
+                    });
+
+                    // Set up mark as in progress button click event
+                    $('#markAsInProgressButton').off('click').on('click', function () {
+                        // Update the event color directly in the calendar
+                        event.color = 'gold';
+                        // Save color to localStorage
+                        localStorage.setItem(event.id, 'gold');
+                        $('#calendar').fullCalendar('updateEvent', event);
+                        // Close the modal
+                        $('#eventModal').modal('hide');
+                    });
+
+                    // Set up mark as not started button click event
+                    $('#markAsNotStartedButton').off('click').on('click', function () {
+                        // Update the event color directly in the calendar
+                        event.color = 'red';
+                        // Save color to localStorage
+                        localStorage.setItem(event.id, 'red');
+                        $('#calendar').fullCalendar('updateEvent', event);
+                        // Close the modal
+                        $('#eventModal').modal('hide');
+                    });
+
+                    // Show the modal
+                    $('#eventModal').modal('show');
                 }
             });
+
+            function getColorForProgress(progress) {
+                if (progress === 'completed') {
+                    return 'green';
+                } else if (progress === 'in-progress') {
+                    return 'gold';
+                } else {
+                    return 'red';
+                }
+            }
         });
     </script>
+
+    <style>
+
+
+        #deleteEventButton:hover {
+            background-color: indianred;
+        }
+
+        #markAsDoneButton:hover {
+            background-color: green; /* Green hover color for mark as done button */
+        }
+
+        #markAsInProgressButton:hover {
+            background-color: orangered; /* Orange hover color for mark as in progress button */
+        }
+
+        #markAsNotStartedButton:hover {
+            background-color: red; /* Red hover color for mark as not started button */
+        }
+
+        .calendar-title {
+            font-size: 28px; 
+            margin-bottom: 10px; 
+            margin-top: 10px;
+        }
+        #legends-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .legend {
+            text-align: center;
+        }
+
+        .legend-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        #create-event-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .btn-primary {
+            background-color: turquoise;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: blue;
+            color: white;
+        }
+
+
+        .event-details {
+            font-size: 22px; 
+        }
+
+        .event-details-description {
+            font-size: 16px;
+            color: darkgray;
+        }
+    </style>
 }
