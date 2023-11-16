@@ -135,5 +135,26 @@ namespace PFDTeam2.DAL
 
             return appointment ?? string.Empty;
         }
+
+        public void AddFeedback(string feedbackText, bool isRelevant, bool actionTaken)
+        {
+            try
+            {
+                conn.Open();
+
+                // Use a parameterized query to prevent SQL injection
+                string sql = "INSERT INTO Feedback (Text, IsRelevant, ActionTaken) VALUES (@Text, @IsRelevant, @ActionTaken)";
+
+                using SqlCommand cmd = new(sql, conn);
+                cmd.Parameters.AddWithValue("@Text", feedbackText);
+                cmd.Parameters.AddWithValue("@IsRelevant", isRelevant);
+                cmd.Parameters.AddWithValue("@ActionTaken", actionTaken);
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }
