@@ -49,3 +49,5 @@
 
 ## Note
 - The calendar function is prone to crashing due to an error connecting to the Google API. This might happen the first time it is run and subsequent runs are usually OK after.
+- Trello link: https://trello.com/b/zkM2G9lG
+  
