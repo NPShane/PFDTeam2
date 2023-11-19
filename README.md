@@ -1,11 +1,12 @@
 # PFD Team2
-# Google Calendar Feature
-## Supervisor
+## Google Calendar Feature
+
+### Supervisor
 1. Create Event/Task by clicking the create event button and filling in the form. Page should redirect you back to the calendar with the new Event/Task inserted
 2. Display employee calendar by choosing the user for monitoring (Implemented halfway)
  ![image](https://github.com/NPShane/PFDTeam2/assets/117629507/eab682ee-b26e-4585-9cd1-883828c3def1)
 
-## Employee
+### Employee
 1. Create Event/Task by clicking the create event button and filling in the form. Page should redirect you back to the calendar with the new Event/Task inserted
 2. Update Event/Task Status by clicking on itself. A popup will display, prompting to mark it as the desired status (i.e Mark as Done, Mark as in Progress, etc.) In the pop-up, there is an option for the event to be deleted as well.
 
@@ -15,18 +16,29 @@
 1. Install node.js
 2. Open the terminal and type "npm init -y" then "npm install @slack/bolt"
 
+### Visual Studio Setup
+1. In Visual Studio 2022, open the terminal and type "node.js"
+
 ### ngrok Installation
 1. Install ngrok
-2. Extract the contents in the zip file
+2. Extract the contents from the zip file
 3. Open ngrok.exe
 4. Type "ngrok http 3000"
-   <img width="669" alt="Screenshot 2023-11-19 230440" src="https://github.com/NPShane/PFDTeam2/assets/115973517/f3ef9bcd-20c8-4b20-acf2-45b3b0f4754a">
-
-6. Copy the Forwarding URL (e.g. https://abcd1234.ngrok.io)
+5. Copy the forwarding URL (e.g. https://abcd1234.ngrok.io)
 
 ### Slack Configuration
 1. Go to "https://api.slack.com/apps/A065GAHDJG0"
 2. Go to "Event Subscriptions"
+3. Click the toggle button to Enable Events
+4. Paste the forwarding URL in the "Request URL" section and add "/slack/events"
+5. The final URL should look like "https://abcd1234.ngrok.io/slack/events"
+6. Go to "Interactivity & Shortcuts"
+7. Click the toggle button to enable Interactivity
+8. Paste the request URL (https://abcd1234.ngrok.io/slack/events)
+9. The bot should now be running
 
-# Visual Studio Setup
-4. In Visual Studio 2022, open the terminal and type "node.js"
+# Feedback Feature
+Set up project for VADER and Python : check that the PythonNET package is installed (NuGet packages for the project, then install a local copy of 32-bit Python 3.7 (THIS EXACT VERSION) and change this one line of code (FeedbackController.cs in Controllers directory), line 78: Runtime.PythonDLL = ...; change the string to the python dll in the install for your system (it could be similar to the string that is currently there). Hopefully this works.
+
+### Note
+- The calendar function is prone to crashing due to an error connecting to the Google API. This might happen the first time it is run and subsequent runs are usually OK after.
