@@ -42,8 +42,10 @@
 3. Follow the instructions in the pinned message
 4. The bot should now be running
 
-# Feedback Feature
-Set up project for VADER and Python : check that the PythonNET package is installed (NuGet packages for the project, then install a local copy of 32-bit Python 3.7 (THIS EXACT VERSION) and change this one line of code (FeedbackController.cs in Controllers directory), line 78: Runtime.PythonDLL = ...; change the string to the python dll in the install for your system (it could be similar to the string that is currently there). Hopefully this works.
+## Feedback Feature
+
+### Set up project for VADER and Python
+1. CVheck that the PythonNET package is installed (NuGet packages for the project, then install a local copy of 32-bit Python 3.7 (THIS EXACT VERSION) and change this one line of code (FeedbackController.cs in Controllers directory), line 78: Runtime.PythonDLL = ...; change the string to the python dll in the install for your system (it could be similar to the string that is currently there). Hopefully this works.
 
 ### Note
 - The calendar function is prone to crashing due to an error connecting to the Google API. This might happen the first time it is run and subsequent runs are usually OK after.
