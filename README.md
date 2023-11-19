@@ -34,8 +34,13 @@
 5. The final URL should look like "https://abcd1234.ngrok.io/slack/events"
 6. Go to "Interactivity & Shortcuts"
 7. Click the toggle button to enable Interactivity
-8. Paste the request URL (https://abcd1234.ngrok.io/slack/events)
-9. The bot should now be running
+8. Paste the same request URL (https://abcd1234.ngrok.io/slack/events)
+
+### Running the bot
+1. Go to "https://app.slack.com/client/T064S46TFL3/C064Q5LNSNR"
+2. Go to the "#self-service" channel
+3. Follow the instructions in the pinned message
+4. The bot should now be running
 
 # Feedback Feature
 Set up project for VADER and Python : check that the PythonNET package is installed (NuGet packages for the project, then install a local copy of 32-bit Python 3.7 (THIS EXACT VERSION) and change this one line of code (FeedbackController.cs in Controllers directory), line 78: Runtime.PythonDLL = ...; change the string to the python dll in the install for your system (it could be similar to the string that is currently there). Hopefully this works.
