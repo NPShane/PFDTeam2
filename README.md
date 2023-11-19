@@ -3,7 +3,7 @@
 
 ### Supervisor
 1. Create Event/Task by clicking the create event button and filling in the form. Page should redirect you back to the calendar with the new Event/Task inserted
-2. Display employee calendar by choosing the user for monitoring (Implemented halfway)
+2. Display employee calendar by choosing the user for monitoring (Implemented halfway) *Code is not included in submission to prevent breaks
  ![image](https://github.com/NPShane/PFDTeam2/assets/117629507/eab682ee-b26e-4585-9cd1-883828c3def1)
 
 ### Employee
