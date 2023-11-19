@@ -20,7 +20,9 @@
 2. Extract the contents in the zip file
 3. Open ngrok.exe
 4. Type "ngrok http 3000"
-5. Copy the Forwarding URL (e.g. https://abcd1234.ngrok.io)
+   <img width="669" alt="Screenshot 2023-11-19 230440" src="https://github.com/NPShane/PFDTeam2/assets/115973517/f3ef9bcd-20c8-4b20-acf2-45b3b0f4754a">
+
+6. Copy the Forwarding URL (e.g. https://abcd1234.ngrok.io)
 
 ### Slack Configuration
 1. Go to "https://api.slack.com/apps/A065GAHDJG0"
