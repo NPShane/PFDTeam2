@@ -1,6 +1,6 @@
 # PFD Team2
 
-## Tutorial on how to setup slack bot
+## Tutorial for slack bot setup
 
 ### Node.js Installation
 1. Install node.js
@@ -16,6 +16,5 @@
 1. Go to "https://api.slack.com/apps/A065GAHDJG0"
 2. Go to "Event Subscriptions"
 
-
-
+# Visual Studio Setup
 4. In Visual Studio 2022, open the terminal and type "node.js"
