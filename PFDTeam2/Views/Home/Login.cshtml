@@ -9,11 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=Fasthand&family=Poppins:wght@300;400;500;600;700&display=swap');
+
     * {
         margin: 0;
         padding: 0;
@@ -25,7 +28,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-image:  url(https://www.workato.com/product-hub/wp-content/uploads/2022/01/Dec-product-header-new-2.gif);
+        background-image: url(https://www.workato.com/product-hub/wp-content/uploads/2022/01/Dec-product-header-new-2.gif);
         background-size: cover;
         font-family: "Poppins", sans-serif;
     }
@@ -69,6 +72,24 @@
         text-align: left;
     }
 
+    /* Center the icon and make it larger */
+    #facialRecognitionBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        #facialRecognitionBtn:hover {
+            background-color: transparent; /* Remove background color on hover */
+            color: #007bff; /* Blue text color on hover */
+            border: 2px solid #007bff; /* Remove border on hover */
+        }
+
+        #facialRecognitionBtn ion-icon {
+            font-size: 1.5em; /* Adjust the size as needed */
+            margin-right: 8px; /* Adjust spacing if needed */
+        }
+
 </style>
 
 <body>
@@ -81,7 +102,7 @@
 
         <h1 class="text-center">Employee Login</h1>
 
-        <form class="needs-validation" action="/Staff/StaffLogin" method="post">
+        <form class="needs-validation" action="/Staff/StaffLogin" method="post" id="loginForm">
             <div class="form-group was-validated">
                 <label class="form-label" for="email">Email address</label>
                 <input class="form-control" type="email" id="email" name="email" required autofocus>
@@ -95,6 +116,12 @@
                 <div class="invalid-feedback">
                     Please enter your password
                 </div>
+            </div>
+            <div class="form-group">
+                <!-- Use Ionicons happy-outline icon -->
+                <button type="button" class="btn btn-primary w-100" id="facialRecognitionBtn">
+                    <ion-icon name="happy-outline"></ion-icon>  Facial Recognition
+                </button>
             </div>
             <div class="form-group form-check">
                 <input class="form-check-input" type="checkbox" id="check">
