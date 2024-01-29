@@ -4,13 +4,29 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <StartupObject></StartupObject>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Python37\**" />
+    <Content Remove="Python37\**" />
+    <EmbeddedResource Remove="Python37\**" />
+    <None Remove="Python37\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Node.js" Version="5.3.0" />
-    <PackageReference Include="QuantConnect.pythonnet" Version="2.0.24" />
+    <PackageReference Include="pythonnet" Version="3.0.3" />
     <PackageReference Include="SlackNet" Version="0.11.5" />
     <PackageReference Include="SlackNet.AspNetCore" Version="0.11.5" />
     <PackageReference Include="SlackNet.Bot" Version="0.11.5" />

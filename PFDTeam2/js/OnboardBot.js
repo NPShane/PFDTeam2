@@ -94,12 +94,40 @@ const app = new App({
 // FAQs data
 const faqs = [
     {
-        question: 'Who we are?',
-        answer: 'Our company is dedicated to...',
+        question: 'Who are we?',
+        answer: 'Workato is a leading integration and automation platform that empowers businesses to connect their applications, automate workflows, and optimize productivity. Our platform is designed to streamline processes, enhance collaboration, and drive digital transformation across organizations. With Workato, you can effortlessly integrate your favorite apps, automate repetitive tasks, and focus on what truly matters – achieving your business goals. Whether you are a small startup or a large enterprise, Workato provides the tools you need to unlock the full potential of your digital ecosystem.',
     },
     {
         question: 'How can I contact support?',
         answer: 'You can reach our support team at support@example.com or by using the #support channel.',
+    },
+    {
+        question: 'How do I reset my password?',
+        answer: 'You can reset your password by visiting our password reset page and following the instructions.',
+    },
+    {
+        question: 'How can I update my profile information?',
+        answer: 'To update your profile, go to the "Profile" section in your account settings and make the necessary changes.',
+    },
+    {
+        question: 'How do I create a new integration in Workato?',
+        answer: 'To create a new integration, log in to your Workato account, navigate to the "Recipes" section, and click on the "Create a Recipe" button. Follow the step-by-step instructions to configure your integration.',
+    },
+    {
+        question: 'What connectors are available in Workato?',
+        answer: 'Workato supports a wide range of connectors for popular apps and services. You can find the full list of connectors in the "Connectors" section of the platform. If you don\'t see the one you need, feel free to request it from our support team.',
+    },
+    {
+        question: 'Can I schedule my workflows to run at specific times?',
+        answer: 'Yes, Workato allows you to schedule workflows to run at specific intervals or times. You can set up schedules in the workflow editor under the "Schedule" tab.',
+    },
+    {
+        question: 'How do I troubleshoot errors in my integration?',
+        answer: 'If you encounter errors in your integration, you can review the logs in the "Monitor" section. The logs provide detailed information about each step in your workflow, helping you identify and address any issues.',
+    },
+    {
+        question: 'Is there a community or forum for Workato users?',
+        answer: 'Yes, Workato has a vibrant community where users can ask questions, share experiences, and collaborate. You can access the community forum on our website.',
     },
     // Add more FAQs as needed
 ];
@@ -280,7 +308,7 @@ faqs.forEach((faq, index) => {
         await ack();
 
         // Display the answer when the button is clicked
-        await say(`*Q: ${faq.question}*\n${faq.answer}`);
+        await say(`*Question: ${faq.question}*\n${faq.answer}`);
     });
 });
 
