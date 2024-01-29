@@ -78,15 +78,42 @@
         justify-content: center;
     }
 
-    #facialRecognitionBtn:hover {
-        background-color: transparent; /* Remove background color on hover */
-        color: #007bff; /* Blue text color on hover */
-        border: 2px solid #007bff; /* Remove border on hover */
+        #facialRecognitionBtn:hover {
+            background-color: transparent; /* Remove background color on hover */
+            color: #007bff; /* Blue text color on hover */
+            border: 2px solid #007bff; /* Remove border on hover */
+        }
+
+        #facialRecognitionBtn ion-icon {
+            font-size: 1.5em; /* Adjust the size as needed */
+            margin-right: 8px; /* Adjust spacing if needed */
+        }
+
+    .overlay-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 999; /* Ensure the overlay appears above other elements */
     }
 
-    #facialRecognitionBtn ion-icon {
-        font-size: 1.5em; /* Adjust the size as needed */
-        margin-right: 8px; /* Adjust spacing if needed */
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* Center the container horizontally and vertically */
+    .container {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .overlay-container {
@@ -172,7 +199,7 @@
         </form>
 
     </div>
-    
+
     <div id="faceio-modal"></div>
     <script src="https://cdn.faceio.net/fio.js"></script>
     <script src="~/js/FaceRecognition.js"></script>
@@ -206,10 +233,10 @@
                 // User Successfully Enrolled!
                 alert(
                     `User Successfully Enrolled! Details:
-                            Unique Facial ID: ${userInfo.facialId}
-                            Enrollment Date: ${userInfo.timestamp}
-                            Gender: ${userInfo.details.gender}
-                            Age Approximation: ${userInfo.details.age}`
+                                    Unique Facial ID: ${userInfo.facialId}
+                                    Enrollment Date: ${userInfo.timestamp}
+                                    Gender: ${userInfo.details.gender}
+                                    Age Approximation: ${userInfo.details.age}`
                 );
                 console.log(userInfo);
                 // handle success, save the facial ID, redirect to dashboard...
