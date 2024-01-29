@@ -1,4 +1,4 @@
-﻿﻿@{
+﻿@{
     Layout = null;
 }
 
@@ -72,7 +72,6 @@
         text-align: left;
     }
 
-    /* Center the icon and make it larger */
     #facialRecognitionBtn {
         display: flex;
         align-items: center;
@@ -80,19 +79,23 @@
     }
 
         #facialRecognitionBtn:hover {
-            background-color: transparent; /* Remove background color on hover */
-            color: #007bff; /* Blue text color on hover */
-            
+            background-color: transparent;
+            color: #007bff;
         }
 
         #facialRecognitionBtn ion-icon {
-            font-size: 1.5em; /* Adjust the size as needed */
-            margin-right: 8px; /* Adjust spacing if needed */
+            font-size: 1.5em;
+            margin-right: 8px;
         }
 
 </style>
 
+
+
+
+
 <body>
+    
 
     <div class="login">
 
@@ -117,15 +120,18 @@
                     Please enter your password
                 </div>
             </div>
-            <div class="form-group">
-                <!-- Use Ionicons happy-outline icon -->
-                <button type="button" class="btn btn-primary w-100" id="facialRecognitionBtn">
-                    <ion-icon name="happy-outline"></ion-icon>  Facial Recognition
-                </button>
-            </div>
             <div class="form-group form-check">
                 <input class="form-check-input" type="checkbox" id="check">
                 <label class="form-check-label" for="check">Remember me</label>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary w-100" id="facialRecognitionBtn">
+                    <ion-icon name="happy-outline"></ion-icon> Facial Recognition
+                </button>
+                <!-- Add this <video> element above the login form, within <body> -->
+
+                <video id="videoFeed" autoplay playsinline style="display: none;" crossorigin="anonymous"></video>
+
             </div>
             <input class="btn btn-success w-100" type="submit" value="SIGN IN">
 
@@ -134,7 +140,36 @@
         </form>
 
     </div>
+    <!-- Add this script section at the end of your HTML, above </body> -->
 
+    <script>
+        document.getElementById('facialRecognitionBtn').addEventListener('click', function () {
+            console.log('Button clicked');
+
+            // Make an AJAX request to your Flask server
+            fetch('https://ecee-2406-3003-206b-223-4597-6120-aef2-ad51.ngrok-free.app/video_feed')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log('Response from server:', data);
+
+                    // Update the code based on the response content
+                    if (data.includes('started')) {
+                        // Hide the login form
+                        document.getElementById('videoFeed').style.display = 'block';
+                    } else {
+                        console.error('Error: Face detection not started. Response:', data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error starting face detection:', error.message);
+                });
+        });
+    </script>
 </body>
 
 </html>

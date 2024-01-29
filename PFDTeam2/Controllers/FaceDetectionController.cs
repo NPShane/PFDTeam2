@@ -18,7 +18,7 @@ namespace PFDTeam2.Controllers
 		{
 			try
 			{
-				var result = await _httpClient.GetStringAsync("http://192.168.112.1:5000/video_feed");
+				var result = await _httpClient.GetStringAsync("https://ecee-2406-3003-206b-223-4597-6120-aef2-ad51.ngrok-free.app/video_feed");
 				// Process the result or display it in your C# web application
 
 				return View("~/Views/FaceDetection/Index.cshtml");
