@@ -700,6 +700,83 @@
                 font-size: 3rem;
             }
         }
+
+        .overlay-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .overlay-content {
+            background-color: #fff;
+            padding: 27px; /* Decreased padding for a smaller container */
+            text-align: center;
+            border-radius: 10px;
+            position: relative;
+            font-size: 20px;
+        }
+
+            .overlay-content h1 {
+                margin-bottom: 0px; /* Adjusted margin to move h1 down */
+                font-size: 24px; /* Adjusted font size for h1 */
+            }
+
+            .overlay-content button {
+                border-radius: 8px;
+                border-color: #4cd7d0;
+                background-color: #4cd7d0;
+                color: #fff;
+                padding: 10px 15px; /* Decreased padding for smaller buttons */
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+                .overlay-content button:hover {
+                    background-color: #36b8b1;
+                }
+
+                .overlay-content button.close-btn {
+                    position: absolute;
+                    top: 5px; /* Adjusted top position to move it closer to the corner */
+                    right: 5px; /* Adjusted right position to move it closer to the corner */
+                    background-color: transparent;
+                    color: #333;
+                    border: none;
+                    font-size: 16px; /* Decreased font size for a smaller X */
+                    cursor: pointer;
+                }
+
+                .overlay-content button:hover {
+                    background-color: #36b8b1;
+                }
+
+                .overlay-content button.close-btn {
+                    position: absolute;
+                    bottom: 200px; /* Adjusted top position to move it higher */
+                    right: 5px; /* Adjusted right position to keep it closer to the corner */
+                    background-color: transparent;
+                    color: #333;
+                    border: none;
+                    font-size: 16px; /* Decreased font size for a smaller X */
+                    cursor: pointer;
+                }
+
+                    .overlay-content button.close-btn:hover {
+                        color: #e44d26; /* Change the color on hover */
+                    }
+
+            .overlay-content .button-container {
+                margin-top: 20px; /* Adjusted margin to move buttons away from h1 */
+            }
+
+                    
     </style>
 </head>
 <body>
@@ -712,9 +789,21 @@
                 <li><a href="~/Staff/Calendar"> Calendar </a></li>
                 <li><a href="https://app.slack.com/client/T064S46TFL3/"> Slack </a></li>
                 <li><a href="~/Feedback/Index"> Feedback </a></li>
+                <li id="facialRecognitionBtn"><a href="#contact">Create FaceID</a></li>
                 <li><a href="#contact"> Contact Us  </a></li>
+
             </ul>
         </div>
+
+        <div class="overlay-container" id="overlayContainer">
+            <div class="overlay-content">
+                <button class="close-btn" onclick="hideOverlay()" title="Close">&#10006;</button>
+                <h1>Register your face for Login</h1><br>
+                <button onclick="enrollNewUser()">Enroll New User</button>
+                @*<button onclick="authenticateUser()" title="Authenticate a previously enrolled user on this application">Authenticate User</button>*@
+            </div>
+        </div>
+
     </header>
     <!-- Background image -->
     <section class="home" id="home">
@@ -777,9 +866,73 @@
     </footer>
     <!-- Footer section ends -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    <div id="faceio-modal"></div>
+    <script src="https://cdn.faceio.net/fio.js"></script>
+    <script src="~/js/FaceRecognition.js"></script>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        document.getElementById('facialRecognitionBtn').addEventListener('click', function () {
+            var overlayContainer = document.getElementById('overlayContainer');
+            overlayContainer.style.display = 'flex'; // Show the overlay container
+        });
+
+        function hideOverlay() {
+            var overlayContainer = document.getElementById('overlayContainer');
+            overlayContainer.style.display = 'none'; // Hide the overlay container
+        }
+
+        // Enrolment and Authentication
+        const faceio = new faceIO("fioa1f13"); /* Your application Public ID */
+
+        function enrollNewUser() {
+            // Start the facial enrollment process
+            faceio.enroll({
+                "locale": "auto", // Default user locale
+                "payload": {
+                    "whoami": 123456,
+                    "email": "john.doe@example.com"
+                }
+            }).then(userInfo => {
+                alert(
+                    `User Successfully Enrolled! Details:
+                            Unique Facial ID: ${userInfo.facialId}
+                            Enrollment Date: ${userInfo.timestamp}
+                            Gender: ${userInfo.details.gender}
+                            Age Approximation: ${userInfo.details.age}`
+                );
+                console.log(userInfo);
+            }).catch(errCode => {
+                console.log("Enrollment failure. Error Code: " + errCode);
+            })
+
+            hideOverlay();
+        }
+
+        function authenticateUser() {
+            // Authenticate a previously enrolled user
+            faceio.authenticate({
+                "locale": "auto"
+            }).then(userData => {
+                console.log("Success, user identified");
+                console.log("Linked facial Id: " + userData.facialId);
+                console.log("Payload: " + JSON.stringify(userData.payload));
+
+                // Redirect to StaffMain page
+                window.location.href = "/Staff/StaffMain";
+            }).catch(errCode => {
+                console.log("Authentication failure. Error Code: " + errCode);
+            })
+
+            hideOverlay();
+        }
+
+        function handleError(errCode) {
+            // Handle errors
+            switch (errCode) {
+                // Add cases for each error code
+            }
+        }
+    </script>
 
     <script>
         let header = document.querySelector("header");
