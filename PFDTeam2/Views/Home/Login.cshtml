@@ -144,6 +144,38 @@
         transform: translate(-50%, -50%);
     }
 
+    .overlay-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+
+    .overlay-content {
+        background-color: #fff;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .overlay-content button {
+            border-radius: 8px;
+            background-color: #4cd7d0;
+            color: #fff;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .overlay-content button:hover {
+                background-color: #36b8b1;
+            }
 </style>
 
 <body>
@@ -178,7 +210,7 @@
                 </button>
             </div>
             <div class="overlay-container" id="overlayContainer">
-                <div class="container">
+                <div class="overlay-content">
                     <h1>Facial Recognition</h1><br>
                     <button onclick="enrollNewUser()" title="Enroll a new user on this FACEIO application">Enroll New User</button>
                     <button onclick="authenticateUser()" title="Authenticate a previously enrolled user on this application">Authenticate User</button>
@@ -212,7 +244,7 @@
         }
 
         // Enrolment and Authentication
-        const faceio = new faceIO("fioa2cda"); /* Your application Public ID */
+        const faceio = new faceIO("fioa1f13"); /* Your application Public ID */
 
         function enrollNewUser() {
             // Start the facial enrollment process
