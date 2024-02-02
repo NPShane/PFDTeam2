@@ -100,7 +100,7 @@
         background: rgba(0, 0, 0, 0.7);
         justify-content: center;
         align-items: center;
-        z-index: 999; /* Ensure the overlay appears above other elements */
+        z-index: 9999; /* Ensure the overlay appears above other elements */
     }
 
 
@@ -136,7 +136,7 @@
         background: rgba(0, 0, 0, 0.7);
         justify-content: center;
         align-items: center;
-        z-index: 999;
+        z-index: 9999;
     }
 
     .overlay-content {
@@ -214,7 +214,7 @@
                 <div class="overlay-content">
                     <button class="close-btn" onclick="hideOverlay()" title="Close">&#10006;</button>
                     <h1>Facial Recognition</h1><br>
-                    <button onclick="enrollNewUser()" title="Enroll a new user on this FACEIO application">Enroll New User</button>
+                    @*<button onclick="enrollNewUser()" title="Enroll a new user on this FACEIO application">Enroll New User</button>*@
                     <button onclick="authenticateUser()" title="Authenticate a previously enrolled user on this application">Authenticate User</button>
                 </div>
             </div>
@@ -247,7 +247,7 @@
         }
 
         // Enrolment and Authentication
-        const faceio = new faceIO("fioa1f13"); /* Your application Public ID */
+        const faceio = new faceIO("fioab75c"); /* Your application Public ID */
 
         function enrollNewUser() {
             // Start the facial enrollment process
