@@ -47,6 +47,20 @@
 ### Set up project for VADER and Python
 1. CVheck that the PythonNET package is installed (NuGet packages for the project, then install a local copy of 32-bit Python 3.7 (THIS EXACT VERSION) and change this one line of code (FeedbackController.cs in Controllers directory), line 78: Runtime.PythonDLL = ...; change the string to the python dll in the install for your system (it could be similar to the string that is currently there). Hopefully this works.
 
+## Facial Recognition with FACEIO
+
+### Instructions to set up integrated platform
+1. Go to "https://faceio.net/"
+2. Sign up for a console
+3. Create an application
+4. Click Next until you reach the end to eventually create an application
+5. Retrieve the Application Public ID and replace the code show in the snippet below:
+![image](https://github.com/NPShane/PFDTeam2/assets/117629507/89f3c281-8b72-4c41-b6d1-6a96ed20042d)
+6. Run the project on IIS Express (Web Browser: Google Chrome). Note that that the browser you are running on should be linked to the account that you used to sign up for a FACEIO Console.
+   
+
+
+
 ## Note
 - The calendar function is prone to crashing due to an error connecting to the Google API. This might happen the first time it is run and subsequent runs are usually OK after.
 - Trello link: https://trello.com/b/zkM2G9lG
