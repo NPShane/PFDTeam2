@@ -30,11 +30,24 @@ namespace PFDTeam2.Controllers
 
             staffDAL.AddFeedback(feedback, isRelevant, result, false, null);
 
-            return RedirectToAction("FeedbackPosted");
+            if (result)
+            {
+                return RedirectToAction("FeedbackPosted");
+            }
+            else
+            {
+                return RedirectToAction("FeedbackPostedNegative");
+            }
         }
 
         // Show a message after posting feedback
         public IActionResult FeedbackPosted()
+        {
+            return View();
+        }
+
+        // Show a message after posting feedback
+        public IActionResult FeedbackPostedNegative()
         {
             return View();
         }
