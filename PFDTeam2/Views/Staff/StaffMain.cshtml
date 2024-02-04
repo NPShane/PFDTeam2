@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NP Courier Service</title>
+    <title>Workato Onboarding App</title>
     <link rel="shortcut icon" href="/assets/favicon.ico">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -1017,5 +1017,20 @@
         loginForm.onsubmit = onLoginFormSubmit;
     </script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <!--- Workato Chatbot powered by Voiceflow  -->
+    <script type="text/javascript">
+        (function (d, t) {
+            var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            v.onload = function () {
+                window.voiceflow.chat.load({
+                    verify: { projectID: '65bf55a0d0cdcdb81dc1eabc' },
+                    url: 'https://general-runtime.voiceflow.com',
+                    versionID: 'production'
+                });
+            }
+            v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+        })(document, 'script');
+    </script>
+
 </body>
 </html>
