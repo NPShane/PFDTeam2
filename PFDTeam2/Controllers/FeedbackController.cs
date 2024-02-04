@@ -75,7 +75,7 @@ namespace PFDTeam2.Controllers
         private static bool CallPythonSentimentAnalysis(string feedback)
         {
             // This only works on one guy's machine due to a quirk of Python.NET
-            Runtime.PythonDLL = @"C:\Users\Shane\AppData\Local\Programs\Python\Python37\python37.dll";
+            Runtime.PythonDLL = @"C:\Users\User\AppData\Local\Programs\Python\Python37\python37.dll";
             PythonEngine.Initialize();
             using (Py.GIL())
             {

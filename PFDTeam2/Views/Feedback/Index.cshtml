@@ -18,7 +18,7 @@
     <style>
 
         @@import url('https://fonts.googleapis.com/css2?family=Fasthand&family=Poppins:wght@300;400;500;600;700&display=swap');
-        
+
         body {
             background-image: url(https://www.workato.com/product-hub/wp-content/uploads/2021/11/Octoberproductheader_compress.gif);
             margin: 0;
@@ -97,14 +97,16 @@
             input[type="submit"]:hover {
                 background-color: #0056b3;
             }
+
     </style>
 </head>
 <body>
+
     <div class="container">
         <h2>Give Feedback on the Onboarding Process</h2>
-        
 
-        <form action="@Url.Action("ProcessFeedback")" method="post">
+
+        <form action="@Url.Action("ProcessFeedback")" method="post" >
             <div class="form-group">
                 <label for="feedbackCategory">Select the type of concern:</label>
                 <select class="form-control" name="feedbackCategory" required>
@@ -114,11 +116,7 @@
                     <option value="process">Others</option>
                 </select>
             </div>
-            <form onsubmit="sendEmail(); reset(); return false;">
-                <h3>Enter Email</h3>
-                <input type="email" id="email" placeholder="Enter Email" class="box" required>
-            </form>
-
+ 
             <div class="form-group">
                 <label for="feedback">Your feedback is kept private and not identifiable:</label>
                 <textarea class="form-control" name="feedback" rows="4" placeholder="Type your feedback here" required></textarea>
@@ -128,8 +126,13 @@
                 <input type="submit" class="btn btn-primary" value="Submit Feedback">
             </div>
         </form>
+        <form onsubmit="sendEmail(); reset(); return false;">
+            <h4> If you want a reply on your feedback please key in your email </h4>
+            <input  class="form-control" type="email" id="email" placeholder="Enter Email" class="box" required>
+            <input type="submit" value="Send Message" class="btn">
+        </form>
     </div>
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
     <script>
         function selectEmoji(event) {
             const emojiOptions = document.querySelectorAll('.emoji-option');
@@ -150,19 +153,18 @@
                 Password: "4B0CC6D4D36895B7727C56E1A04DA190F0E0",
                 To: document.getElementById("email").value,
                 From: 'vernonkoh123@gmail.com',
-                Subject: "New Contact Us Enquiry",
-                Body: "Name: " + document.getElementById("name").value
-                    + "<br> Email: " + document.getElementById("email").value
-                    + "<br> Subject: " + document.getElementById("subject").value
-                    + "<br> Message: " + document.getElementById("message").value
+                Subject: "Thank you for your feedback",
+                Body: "Email: " + document.getElementById("email").value
+                    + "<br> Message: Thank you for your feedback we really appreciate it and we would reply you As Soon As Possible "
+
 
             }).then(
                 message => alert("Message Sent Succesfully")
             );
         }
 
-       
+
     </script>
-    
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
 </body>
 </html>
