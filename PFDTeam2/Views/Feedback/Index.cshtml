@@ -102,6 +102,8 @@
 <body>
     <div class="container">
         <h2>Give Feedback on the Onboarding Process</h2>
+        
+
         <form action="@Url.Action("ProcessFeedback")" method="post">
             <div class="form-group">
                 <label for="feedbackCategory">Select the type of concern:</label>
@@ -112,42 +114,22 @@
                     <option value="process">Others</option>
                 </select>
             </div>
+            <form onsubmit="sendEmail(); reset(); return false;">
+                <h3>Enter Email</h3>
+                <input type="email" id="email" placeholder="Enter Email" class="box" required>
+            </form>
 
             <div class="form-group">
                 <label for="feedback">Your feedback is kept private and not identifiable:</label>
                 <textarea class="form-control" name="feedback" rows="4" placeholder="Type your feedback here" required></textarea>
             </div>
-            @* <div class="form-group"> *@
-            @*     <label>Choose an emoji:</label> *@
-            @*     <div class="emoji-options"> *@
-            @*         <div class="emoji-option" id="excited"> *@
-            @*             <input type="radio" name="selectedEmoji" value="1" required> *@
-            @*             <label>😃</label> *@
-            @*         </div> *@
-            @*         <div class="emoji-option" id="happy"> *@
-            @*             <input type="radio" name="selectedEmoji" value=".8" required> *@
-            @*             <label>😊</label> *@
-            @*         </div> *@
-            @*         <div class="emoji-option" id="neutral"> *@
-            @*             <input type="radio" name="selectedEmoji" value=".6" required> *@
-            @*             <label>😐</label> *@
-            @*         </div> *@
-            @*         <div class="emoji-option" id="sad"> *@
-            @*             <input type="radio" name="selectedEmoji" value=".4" required> *@
-            @*             <label>😞</label> *@
-            @*         </div> *@
-            @*         <div class="emoji-option" id="angry"> *@
-            @*             <input type="radio" name="selectedEmoji" value=".2" required> *@
-            @*             <label>😡</label> *@
-            @*         </div> *@
-            @*     </div> *@
-            @* </div> *@
+
             <div class="form-group text-center">
                 <input type="submit" class="btn btn-primary" value="Submit Feedback">
             </div>
         </form>
     </div>
-
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
     <script>
         function selectEmoji(event) {
             const emojiOptions = document.querySelectorAll('.emoji-option');
@@ -161,9 +143,26 @@
             }
         }
 
+        function sendEmail() {
+            Email.send({
+                Host: "smtp.elasticemail.com",
+                Username: 'vernonkoh123@gmail.com',
+                Password: "4B0CC6D4D36895B7727C56E1A04DA190F0E0",
+                To: document.getElementById("email").value,
+                From: 'vernonkoh123@gmail.com',
+                Subject: "New Contact Us Enquiry",
+                Body: "Name: " + document.getElementById("name").value
+                    + "<br> Email: " + document.getElementById("email").value
+                    + "<br> Subject: " + document.getElementById("subject").value
+                    + "<br> Message: " + document.getElementById("message").value
+
+            }).then(
+                message => alert("Message Sent Succesfully")
+            );
+        }
 
        
     </script>
-
+    
 </body>
 </html>
