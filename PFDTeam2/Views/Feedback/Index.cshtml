@@ -5,6 +5,7 @@
 *@
 @{
     ViewData["Title"] = "Give Feedback";
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -120,8 +121,8 @@
                 <label for="feedback">Your feedback is kept private and not identifiable:</label>
                 <textarea class="form-control" name="feedback" rows="4" placeholder="Type your feedback here" required></textarea>
             </div>
-            <h4> If you want a reply on your feedback please key in your email </h4>
-            <input  class="form-control" type="email" id="email" placeholder="Enter Email" class="box" required>
+            <label> If you want to receive updates on your feedback, please key in your Email:</label>
+            <input  class="form-control" style ="margin-bottom:20px" type="email" id="email" placeholder="Enter Email" class="box" required>
             <input type="submit" value="Submit Feedback" class="btn">
         </form>
     </div>
