@@ -106,7 +106,7 @@
         <h2>Give Feedback on the Onboarding Process</h2>
 
 
-        <form action="@Url.Action("ProcessFeedback")" method="post" >
+        <form action="@Url.Action("ProcessFeedback")" method="post" onsubmit="sendEmail(); reset(); return false;">
             <div class="form-group">
                 <label for="feedbackCategory">Select the type of concern:</label>
                 <select class="form-control" name="feedbackCategory" required>
@@ -116,20 +116,13 @@
                     <option value="process">Others</option>
                 </select>
             </div>
- 
             <div class="form-group">
                 <label for="feedback">Your feedback is kept private and not identifiable:</label>
                 <textarea class="form-control" name="feedback" rows="4" placeholder="Type your feedback here" required></textarea>
             </div>
-
-            <div class="form-group text-center">
-                <input type="submit" class="btn btn-primary" value="Submit Feedback">
-            </div>
-        </form>
-        <form onsubmit="sendEmail(); reset(); return false;">
             <h4> If you want a reply on your feedback please key in your email </h4>
             <input  class="form-control" type="email" id="email" placeholder="Enter Email" class="box" required>
-            <input type="submit" value="Send Message" class="btn">
+            <input type="submit" value="Submit Feedback" class="btn">
         </form>
     </div>
 
